@@ -12,8 +12,8 @@ import androidx.annotation.Nullable;
 class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private Context context;
-    private static final String DATABASE_NAME = "ToDo";
-    private static final int DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME = "to_do_list";
+    private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE_NAME = "mytask";
     private static final String COLUMN_ID = "_id";
@@ -22,6 +22,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_days = "task_days";
     private static final String COLUMN_type = "task_type";
     private static final String COLUMN_priority = "task_priority";
+    private static final String COLUMN_status = "task_status";
     MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
@@ -35,7 +36,8 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_data + " TEXT, "+
                 COLUMN_type + " TEXT, "+
                 COLUMN_days + " INTEGER,"+
-        COLUMN_priority +" TEXT  )" ;
+        COLUMN_priority +" TEXT,"+
+        COLUMN_status+" TEXT );" ;
         db.execSQL(query);
     }
 
@@ -49,7 +51,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 //Basic operations insert - update - retrieve - delete
-    public void addTask(String title, String data, int days, String type, String priority){
+    public void addTask(String title, String data, int days, String type, String priority,String status){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues row = new ContentValues();
 
@@ -58,6 +60,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         row.put(COLUMN_days, days);
         row.put(COLUMN_type, type);
         row.put(COLUMN_priority,priority);
+        row.put(COLUMN_status,status);
         long result = db.insert(TABLE_NAME,null, row);
         if(result == -1){
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
@@ -66,7 +69,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void updateTask(String title,String newTitle, String data, int days,String type,String priority){
+    public void updateTask(String title,String newTitle, String data, int days,String type,String priority,String status){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues newRowContent = new ContentValues();
 
@@ -75,6 +78,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         newRowContent.put(COLUMN_days, days);
         newRowContent.put(COLUMN_type, type);
         newRowContent.put(COLUMN_priority,priority);
+        newRowContent.put(COLUMN_status,status);
 
         Cursor cursor = db.rawQuery("select * from mytask where task_title =?" ,new String[]{title});
 
