@@ -25,7 +25,6 @@ public class work extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_work);
         ArrayList<taskshow> tasks= new ArrayList<>();
         tasks.add(new taskshow("FARH","22/8/2021",done,edit,delete));
@@ -40,7 +39,7 @@ public class work extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         ADD.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(work.this, AddActivity.class);
+                Intent intent  = new Intent(getBaseContext(), AddActivity.class );
                 intent.putExtra("type","work");
                 startActivity(intent);
             }
