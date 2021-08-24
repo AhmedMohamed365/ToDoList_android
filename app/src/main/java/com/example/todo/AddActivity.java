@@ -2,9 +2,12 @@ package com.example.todo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -47,9 +50,19 @@ String priorityChoice = "ordinary";
 
        Button selectedBt = (Button) view;
 
-        priorityChoice =  selectedBt.getText().toString();
+//       title_input.setClickable(true);
+        title_input.setFocusableInTouchMode(true);
+        title_input.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(title_input, InputMethodManager.SHOW_IMPLICIT);
 
-        Toast.makeText(this,"You Chosed bt "+priorityChoice,Toast.LENGTH_SHORT).show();
+
+
+        //title_input.
+
+//        priorityChoice =  selectedBt.getText().toString();
+//
+//        Toast.makeText(this,"You Chosed bt "+priorityChoice,Toast.LENGTH_SHORT).show();
     }
 
 

@@ -36,23 +36,23 @@ public class ViewListContents extends AppCompatActivity {
 
 
         // use the same code only change which function gets called deleteTask or updateTask
-/*
-        Cursor data = myDB.getListContents();
-        if(data.getCount() > 0)
-        {
-            data.moveToNext();
+
+//        Cursor data = myDB.getListContents();
+//        if(data.getCount() > 0)
+//        {
+//            data.moveToNext();
 //            myDB.deleteTask(data.getString(1));
-            myDB.updateTask(data.getString(1),"It's New Title","This is example for update",1,cateogry,"Urgent");
-            //get the updated list after deletion
-
-            data = myDB.getListContents();
-        }
-
-
+//            //myDB.updateTask(data.getString(1),"It's New Title","This is example for update",1,cateogry,"Urgent");
+//            //get the updated list after deletion
+//
+//            data = myDB.getListContents();
+//        }
 
 
 
- */
+
+
+
 
         Cursor data = myDB.getListContents();
         if(data.getCount() == 0){
