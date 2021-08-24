@@ -26,30 +26,33 @@ public class work extends AppCompatActivity {
     int done = R.drawable.ic_baseline_done_24;
     int edit = R.drawable.ic_baseline_edit_24;
     int delete = R.drawable.ic_baseline_delete_24;
-
+Button addBt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work);
         recyclerView = findViewById(R.id.recyclerView);
+        addBt = findViewById(R.id.addBt);
         recyclerView.setHasFixedSize(true);
         ArrayList<taskshow> tasks = new ArrayList<>();
         MyDatabaseHelper DB = new MyDatabaseHelper(this);
-        DB.addTask("AHMED", "WORK", 25, "work", "");
-        DB.addTask("AHMED", "WORK", 25, "work", "");
-        DB.addTask("AHMED", "WORK", 25, "work", "");
-        DB.addTask("AHMED", "WORK", 25, "work", "");
-        DB.addTask("AHMED", "WORK", 25, "work", "");
-        DB.addTask("AHMED", "WORK", 25, "work", "");
-        DB.addTask("AHMED", "WORK", 25, "work", "");
-        DB.addTask("AHMED", "WORK", 25, "work", "");
-        DB.addTask("AHMED", "WORK", 25, "work", "");
-        DB.addTask("AHMED", "WORK", 25, "work", "");
+        DB.addTask("AHMED", "WORK", 25, "work", "","");
+        DB.addTask("AHMED", "WORK", 25, "work", "","");
+        DB.addTask("AHMED", "WORK", 25, "work", "","");
+        DB.addTask("AHMED", "WORK", 25, "work", "","");
+        DB.addTask("AHMED", "WORK", 25, "work", "","");
+        DB.addTask("AHMED", "WORK", 25, "work", "","");
+        DB.addTask("AHMED", "WORK", 25, "work", "","");
+        DB.addTask("AHMED", "WORK", 25, "work", "","");
+        DB.addTask("AHMED", "WORK", 25, "work", "","");
+        DB.addTask("AHMED", "WORK", 25, "work", "","");
         ArrayList<String> theList = new ArrayList<>();
         Cursor data = DB.getListContents();
         if (data.getCount() == 0) {
             Toast.makeText(this, "There are no contents in this list!", Toast.LENGTH_LONG).show();
-        } else {
+        }
+        else
+        {
             while (data.moveToNext()) {
                 if (data.getString(3).equals("work")) {
                     tasks.add(new taskshow(data.getString(1),data.getString(2) ,done,edit,delete));
@@ -60,5 +63,13 @@ public class work extends AppCompatActivity {
                 }
             }
         }
+
+        //handle add bt
+        addBt.setOnClickListener(view ->
+                {
+                    Intent intent  = new Intent(getBaseContext(), AddActivity.class );
+                    startActivity(intent);
+                }
+                                );
     }
 }
