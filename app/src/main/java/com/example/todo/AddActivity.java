@@ -19,12 +19,6 @@ String priorityChoice = "ordinary";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         String cateogry=getIntent().getStringExtra("type");
-        title_input = findViewById(R.id.title_input);
-        data_input = findViewById(R.id.data_input);
-        days_input = findViewById(R.id.days_input);
-        add_button = findViewById(R.id.add_button);
-        //prioritySection
-        priorityBts = new Button[]{findViewById(R.id.urgentBt), findViewById(R.id.ordinaryBt),findViewById(R.id.ImportantBt)};
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
