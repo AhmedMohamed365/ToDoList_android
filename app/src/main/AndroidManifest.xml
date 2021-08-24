@@ -23,7 +23,7 @@
             android:name=".gym"
             android:exported="true" />
         <activity
-            android:name=".FAMILY"
+            android:name=".family"
             android:exported="true" />
         <activity
             android:name=".shopping"

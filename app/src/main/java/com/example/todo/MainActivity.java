@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     Button button4;
     Button button5;
     Button button6;
-
+     static String whichActivity = "main";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getBaseContext(), work.class );
+                whichActivity  = "work";
                 startActivity(intent);
             }
         });
@@ -51,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(getBaseContext(), FAMILY.class );
+                Intent intent  = new Intent(getBaseContext(), family.class );
+                whichActivity  = "family";
                 startActivity(intent);
             }
         });
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getBaseContext(), weekend.class );
+                whichActivity  = "weekend";
                 startActivity(intent);
             }
         });
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getBaseContext(), shopping.class );
+                whichActivity  = "shopping";
                 startActivity(intent);
             }
         });
@@ -76,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getBaseContext(), studying.class );
+                whichActivity  = "studying";
                 startActivity(intent);
             }
         });
@@ -84,9 +89,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getBaseContext(), gym.class );
+                whichActivity  = "gym";
                 startActivity(intent);
             }
         });
+    }
+    public static void loadData ()
+    {
 
     }
 }

@@ -4,10 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class FAMILY extends AppCompatActivity {
+public class family extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.showtasks);
     }
 }
