@@ -69,6 +69,15 @@ public class AddActivity extends AppCompatActivity {
     }
 
 
+
+    public void handleAddTaskBt()
+    {
+        //Will give error not all fields return a value
+        MyDatabaseHelper myDB = new MyDatabaseHelper(AddActivity.this);
+        myDB.addTask(title_input.getText().toString().trim(),
+                data_input.getText().toString().trim(),
+                Integer.valueOf(days_input.getText().toString().trim()),"work",priorityChoice,"Done");
+    }
    public void getPriority(View view)
     {
 
