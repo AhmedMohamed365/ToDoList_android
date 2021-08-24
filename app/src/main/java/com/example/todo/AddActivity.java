@@ -19,15 +19,7 @@ String priorityChoice = "ordinary";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         String cateogry=getIntent().getStringExtra("type");
-        add_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MyDatabaseHelper myDB = new MyDatabaseHelper(AddActivity.this);
-                myDB.addTask(title_input.getText().toString().trim(),
-                        data_input.getText().toString().trim(),
-                        Integer.valueOf(days_input.getText().toString().trim()),cateogry,priorityChoice);
-            }
-        });
+
 
 
     }
