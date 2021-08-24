@@ -1,16 +1,21 @@
 package com.example.todo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getBaseContext(), work.class );
-                whichActivity  = "work";
+                whichActivity  = "WORK";
                 startActivity(intent);
             }
         });
@@ -53,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getBaseContext(), family.class );
-                whichActivity  = "family";
+                whichActivity  = "FAMILY";
                 startActivity(intent);
             }
         });
@@ -62,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getBaseContext(), weekend.class );
-                whichActivity  = "weekend";
+                whichActivity  = "WEEKEND";
                 startActivity(intent);
             }
         });
@@ -71,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getBaseContext(), shopping.class );
-                whichActivity  = "shopping";
+                whichActivity  = "SHOPPING";
                 startActivity(intent);
             }
         });
@@ -80,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getBaseContext(), studying.class );
-                whichActivity  = "studying";
+                whichActivity  = "STUDYING";
                 startActivity(intent);
             }
         });
@@ -89,13 +94,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getBaseContext(), gym.class );
-                whichActivity  = "gym";
+                whichActivity  = "GYM";
                 startActivity(intent);
             }
         });
-    }
-    public static void loadData ()
-    {
-
     }
 }
