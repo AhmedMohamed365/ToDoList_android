@@ -56,6 +56,17 @@ public class work extends AppCompatActivity {
             String taskName = intent.getStringExtra("taskName");
 
             Toast.makeText(work.this,taskName +" " ,Toast.LENGTH_SHORT).show();
+
+            if(taskName != null)
+            {
+                Cursor data = myDB.getListContents();
+
+                if(data.getCount() > 0)
+                {
+                    myDB.deleteTask(taskName);
+                    loadData();
+                }
+            }
         }
     };
 

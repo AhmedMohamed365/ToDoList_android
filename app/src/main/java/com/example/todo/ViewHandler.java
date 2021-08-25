@@ -36,7 +36,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
                 //delete the requested task
                 Intent intent = new Intent("deleteOrder");
                 intent.putExtra("taskName",name.getText().toString());
-               // LocalBroadcastManager.getInstance().sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
             });
         }
     }
