@@ -30,6 +30,10 @@ public class AddActivity extends AppCompatActivity {
     TextView   dateField;
     Button add_button;
     String priorityChoice = "ordinary";
+
+
+
+
     Button []priorityBts;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -81,50 +85,16 @@ public class AddActivity extends AppCompatActivity {
     }
 
 
-    public  void loadData()
-    {
-        RecyclerView recyclerView;
-        RecyclerView.Adapter adapter;
-        int done = R.drawable.ic_baseline_done_24;
-        int edit = R.drawable.ic_baseline_edit_24;
-        int delete = R.drawable.ic_baseline_delete_24;
-        RecyclerView.LayoutManager layoutManager;
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        ArrayList<taskshow> tasks = new ArrayList<>();
-        MyDatabaseHelper myDB= new MyDatabaseHelper(this);
-        Cursor data = myDB.getListContents();
-        if (data.getCount() == 0) {
-            Toast.makeText(this, "There are no contents in this list!", Toast.LENGTH_LONG).show();
-        } else {
-            while (data.moveToNext()) {
-                if (data.getString(3).equals(whichActivity.toLowerCase())) {
-                    tasks.add(new taskshow(data.getString(1),data.getString(2) ,done,edit,delete));
-                    layoutManager = new LinearLayoutManager(this);
-                    adapter = new ViewHandler(tasks);
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(adapter);
-                }
-            }
-        }
-        Button addBtn = findViewById(R.id.addBtn);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), AddActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
+
     public void handleAddTaskBt(View view)
     {
-        //Will give error not all fields return a value
+
         MyDatabaseHelper myDB = new MyDatabaseHelper(this);
         myDB.addTask(title_input.getText().toString().trim(), data_input.getText().toString().trim(),
-               dateField.getText().toString().trim(), whichActivity,"","going");
+               dateField.getText().toString().trim(), whichActivity,priorityChoice,"going");
 
 
-       // loadData();
+
     }
    public void getPriority(View view)
     {
