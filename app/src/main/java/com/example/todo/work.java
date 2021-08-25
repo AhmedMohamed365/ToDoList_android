@@ -2,13 +2,19 @@ package com.example.todo;
 import static com.example.todo.MainActivity.whichActivity;
 import  com.example.todo.MainActivity.*;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,10 +26,12 @@ import java.util.ArrayList;
 public class work extends AppCompatActivity {
 
 
+    MyDatabaseHelper myDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.showtasks);
+        myDB = new MyDatabaseHelper(this);
         TextView workLabel  = findViewById(R.id.label);
 
         Button addTaskBt = findViewById(R.id.addBtn);
@@ -35,11 +43,21 @@ public class work extends AppCompatActivity {
         workLabel.setText(whichActivity);
         loadData();
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter("deleteOrder"));
 
 
     }
 
+    public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String taskName = intent.getStringExtra("taskName");
 
+            Toast.makeText(work.this,taskName +" " ,Toast.LENGTH_SHORT).show();
+        }
+    };
 
     //this function will update data when coming back from add Task activity
     @Override
@@ -59,7 +77,7 @@ public class work extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         ArrayList<taskshow> tasks = new ArrayList<>();
-        MyDatabaseHelper myDB= new MyDatabaseHelper(this);
+
         Cursor data = myDB.getListContents();
         if (data.getCount() == 0) {
             Toast.makeText(this, "There are no contents in this list!", Toast.LENGTH_LONG).show();
