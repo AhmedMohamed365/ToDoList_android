@@ -23,6 +23,7 @@ public class work extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.showtasks);
         TextView workLabel  = findViewById(R.id.label);
+        whichActivity = "WORK";
         workLabel.setText(whichActivity);
         loadData();
 

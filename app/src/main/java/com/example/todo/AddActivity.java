@@ -36,7 +36,7 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        whichActivity = "WORK";
+
         String cateogry=getIntent().getStringExtra("type");
         title_input= findViewById(R.id.taskName);
         data_input = findViewById(R.id.taskData);

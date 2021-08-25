@@ -109,7 +109,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
 
-        Cursor cursor = db.rawQuery("select * from mytask where task_title =?" ,new String[]{title});
+        Cursor cursor = db.rawQuery("select * from mytask where task_title = ?" ,new String[]{title});
 
         if(cursor.getCount() >0)
         {
