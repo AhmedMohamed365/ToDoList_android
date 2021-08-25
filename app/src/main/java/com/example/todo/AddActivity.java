@@ -97,7 +97,7 @@ public class AddActivity extends AppCompatActivity {
             Toast.makeText(this, "There are no contents in this list!", Toast.LENGTH_LONG).show();
         } else {
             while (data.moveToNext()) {
-                if (data.getString(3).equals(whichActivity.toLowerCase())) {
+                if (data.getString(3).equals("work") ) {
                     tasks.add(new taskshow(data.getString(1),data.getString(2) ,done,edit,delete));
                     layoutManager = new LinearLayoutManager(this);
                     adapter = new ViewHandler(tasks);
@@ -119,11 +119,12 @@ public class AddActivity extends AppCompatActivity {
     {
         //Will give error not all fields return a value
         MyDatabaseHelper myDB = new MyDatabaseHelper(this);
+        //myDB.deleteTask("AHMED");
         myDB.addTask(title_input.getText().toString().trim(), data_input.getText().toString().trim(),
-               dateField.getText().toString().trim(), whichActivity,"","going");
+               dateField.getText().toString().trim(), "WORK","","going");
 
 
-       // loadData();
+        loadData();
     }
    public void getPriority(View view)
     {
