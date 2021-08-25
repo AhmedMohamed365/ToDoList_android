@@ -66,15 +66,16 @@ public class AddActivity extends AppCompatActivity {
 
         };
 
-        dateField.setOnClickListener(v -> {
-            // TODO Auto-generated method stub
-            new DatePickerDialog(AddActivity.this, date, myCalendar
-                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+        dateField.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(AddActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
         });
-
-
-
 
 
     }
@@ -106,10 +107,14 @@ public class AddActivity extends AppCompatActivity {
                 }
             }
         }
-
-
-
-
+        Button addBtn = findViewById(R.id.addBtn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), AddActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     public void handleAddTaskBt(View view)
     {
@@ -119,7 +124,7 @@ public class AddActivity extends AppCompatActivity {
         myDB.addTask(title_input.getText().toString().trim(), data_input.getText().toString().trim(),
                dateField.getText().toString().trim(), "WORK","","going");
 
-//load the updated data
+
         loadData();
     }
    public void getPriority(View view)

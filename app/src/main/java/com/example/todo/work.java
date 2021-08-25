@@ -26,13 +26,6 @@ public class work extends AppCompatActivity {
         whichActivity = "WORK";
         workLabel.setText(whichActivity);
         loadData();
-
-
-        Button addTaskBt = findViewById(R.id.addBtn);
-        addTaskBt.setOnClickListener(view -> {
-            Intent intent = new Intent(getBaseContext(), AddActivity.class);
-            startActivity(intent);
-        });
     }
     public  void loadData()
     {
@@ -60,13 +53,13 @@ public class work extends AppCompatActivity {
                 }
             }
         }
-//        Button addBtn = findViewById(R.id.addBtn);
-//        addBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getBaseContext(), AddActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        Button addBtn = findViewById(R.id.addBtn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), AddActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
