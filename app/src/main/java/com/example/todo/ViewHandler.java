@@ -22,7 +22,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
     {
         public ImageView edit,done,delete ;
         public TextView name,date;
-
+        int order = -1;
         public EXAMPLEVIEWHOLDER(@NonNull View itemView) {
             super(itemView);
 
@@ -31,11 +31,29 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
             edit = itemView.findViewById(R.id.editImage);
             name = itemView.findViewById(R.id.nameTxt);
             date = itemView.findViewById(R.id.dateTxt);
-            delete.setOnClickListener(view -> {
-
-                //delete the requested task
-                Intent intent = new Intent("deleteOrder");
+            edit.setOnClickListener(view -> {
+                order = 1;
+                Intent intent = new Intent("cardOrder");
                 intent.putExtra("taskName",name.getText().toString());
+                intent.putExtra("order",order);
+                LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
+
+            });
+            done.setOnClickListener(view -> {
+                order = 0;
+                Intent intent = new Intent("cardOrder");
+                intent.putExtra("taskName",name.getText().toString());
+                intent.putExtra("order",order);
+                LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
+
+
+            });
+            delete.setOnClickListener(view -> {
+                order = 2;
+                //delete the requested task
+                Intent intent = new Intent("cardOrder");
+                intent.putExtra("taskName",name.getText().toString());
+                intent.putExtra("order",order);
                 LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
             });
         }

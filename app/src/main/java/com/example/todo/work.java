@@ -44,7 +44,7 @@ public class work extends AppCompatActivity {
         loadData();
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter("deleteOrder"));
+                new IntentFilter("cardOrder"));
 
 
     }
@@ -54,7 +54,7 @@ public class work extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String taskName = intent.getStringExtra("taskName");
-
+            int order = intent.getIntExtra("order",-1);
             Toast.makeText(work.this,taskName +" " ,Toast.LENGTH_SHORT).show();
 
             if(taskName != null)
@@ -63,7 +63,25 @@ public class work extends AppCompatActivity {
 
                 if(data.getCount() > 0)
                 {
-                    myDB.deleteTask(taskName);
+                    if(order == 2)
+                        myDB.deleteTask(taskName);
+                    else if(order == 0)
+                    {
+                        myDB.updateTask(taskName,taskName,"",1,"WORK","ordinary","Done");
+                    }
+                    else
+                    {
+                        Intent transferIntent  = new Intent(getBaseContext(), AddActivity.class );
+                      //  whichActivity  = "WEEKEND";
+
+                        //we need to transfer the task we want to edit now and change add Bt to save changes
+                      //  transferIntent.putExtra("taskName",taskName);
+
+                       // transferIntent.putExtra("taskName",taskName);
+                        startActivity(transferIntent);
+                    }
+
+
                     loadData();
                 }
             }
