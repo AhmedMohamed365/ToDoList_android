@@ -66,6 +66,8 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(context, "Added Successfully!", Toast.LENGTH_SHORT).show();
+
+
         }
     }
 
@@ -97,6 +99,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
+
 
     public void deleteTask(String title){
         SQLiteDatabase db = this.getWritableDatabase();

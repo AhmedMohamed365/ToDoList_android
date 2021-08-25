@@ -26,7 +26,7 @@ public class work extends AppCompatActivity {
         workLabel.setText(whichActivity);
         loadData();
     }
-    public void loadData()
+    public  void loadData()
     {
         RecyclerView recyclerView;
         RecyclerView.Adapter adapter;
