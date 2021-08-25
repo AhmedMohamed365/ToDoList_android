@@ -50,6 +50,10 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
 //        }
         onCreate(db);
     }
+
+
+
+
 //Basic operations insert - update - retrieve - delete
     public void addTask(String title, String data, String date, String type, String priority,String status){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -66,6 +70,8 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(context, "Added Successfully!", Toast.LENGTH_SHORT).show();
+
+
         }
     }
 
@@ -98,11 +104,12 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+
     public void deleteTask(String title){
         SQLiteDatabase db = this.getWritableDatabase();
 
 
-        Cursor cursor = db.rawQuery("select * from mytask where task_title =?" ,new String[]{title});
+        Cursor cursor = db.rawQuery("select * from mytask where task_title = ?" ,new String[]{title});
 
         if(cursor.getCount() >0)
         {

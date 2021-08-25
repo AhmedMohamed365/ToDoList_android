@@ -23,6 +23,7 @@ public class shopping extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.showtasks);
         TextView shoppingLabel  = findViewById(R.id.label);
+        whichActivity = "SHOPPING";
         shoppingLabel.setText(whichActivity);
         loadData();
     }

@@ -18,17 +18,39 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class work extends AppCompatActivity {
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.showtasks);
         TextView workLabel  = findViewById(R.id.label);
+
+        Button addTaskBt = findViewById(R.id.addBtn);
+        addTaskBt.setOnClickListener(view -> {
+            Intent intent = new Intent(getBaseContext(), AddActivity.class);
+            startActivity(intent);
+        });
+
         workLabel.setText(whichActivity);
         loadData();
+
+
+
     }
-    public void loadData()
+
+
+
+    //this function will update data when coming back from add Task activity
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData();
+    }
+
+    public  void loadData()
     {
-        RecyclerView recyclerView;
+       RecyclerView recyclerView;
         RecyclerView.Adapter adapter;
         int done = R.drawable.ic_baseline_done_24;
         int edit = R.drawable.ic_baseline_edit_24;
@@ -43,7 +65,7 @@ public class work extends AppCompatActivity {
             Toast.makeText(this, "There are no contents in this list!", Toast.LENGTH_LONG).show();
         } else {
             while (data.moveToNext()) {
-                if (data.getString(3).equals(whichActivity.toLowerCase())) {
+                if (data.getString(3).equals(whichActivity)) {
                     tasks.add(new taskshow(data.getString(1),data.getString(2) ,done,edit,delete));
                     layoutManager = new LinearLayoutManager(this);
                     adapter = new ViewHandler(tasks);
@@ -52,13 +74,6 @@ public class work extends AppCompatActivity {
                 }
             }
         }
-        Button addBtn = findViewById(R.id.addBtn);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), AddActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
 }

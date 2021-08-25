@@ -23,6 +23,7 @@ public class weekend extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.showtasks);
         TextView weekEndLabel  = findViewById(R.id.label);
+        whichActivity = "WEEKEND";
         weekEndLabel.setText(whichActivity);
 
         loadData();

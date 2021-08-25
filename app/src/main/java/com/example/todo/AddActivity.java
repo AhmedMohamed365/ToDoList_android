@@ -30,17 +30,22 @@ public class AddActivity extends AppCompatActivity {
     TextView   dateField;
     Button add_button;
     String priorityChoice = "ordinary";
+
+
+
+
     Button []priorityBts;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
         String cateogry=getIntent().getStringExtra("type");
         title_input= findViewById(R.id.taskName);
         data_input = findViewById(R.id.taskData);
         dateField= (TextView) findViewById(R.id.DatePicker);
-        add_button = findViewById(R.id.addBtn);
+        add_button = findViewById(R.id.addingTaskBtn);
         final Calendar myCalendar = Calendar.getInstance();
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -52,12 +57,8 @@ public class AddActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                add_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        handleAddTaskBt();
-                    }
-                });
+
+                updateLabel();
             }
 
             private void updateLabel() {
@@ -85,13 +86,15 @@ public class AddActivity extends AppCompatActivity {
 
 
 
-    public void handleAddTaskBt()
+    public void handleAddTaskBt(View view)
     {
-        //Will give error not all fields return a value
-        MyDatabaseHelper myDB = new MyDatabaseHelper(AddActivity.this);
+
+        MyDatabaseHelper myDB = new MyDatabaseHelper(this);
         myDB.addTask(title_input.getText().toString().trim(), data_input.getText().toString().trim(),
-               dateField.getText().toString().trim(), whichActivity,"","going");
-        loadData();
+               dateField.getText().toString().trim(), whichActivity,priorityChoice,"going");
+
+
+
     }
    public void getPriority(View view)
     {
@@ -102,40 +105,5 @@ public class AddActivity extends AppCompatActivity {
         priorityChoice =  selectedBt.getText().toString();
 
         Toast.makeText(this,"You Chosed bt "+priorityChoice,Toast.LENGTH_SHORT).show();
-    }
-    public void loadData()
-    {
-        RecyclerView recyclerView;
-        RecyclerView.Adapter adapter;
-        int done = R.drawable.ic_baseline_done_24;
-        int edit = R.drawable.ic_baseline_edit_24;
-        int delete = R.drawable.ic_baseline_delete_24;
-        RecyclerView.LayoutManager layoutManager;
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        ArrayList<taskshow> tasks = new ArrayList<>();
-        MyDatabaseHelper myDB= new MyDatabaseHelper(this);
-        Cursor data = myDB.getListContents();
-        if (data.getCount() == 0) {
-            Toast.makeText(this, "There are no contents in this list!", Toast.LENGTH_LONG).show();
-        } else {
-            while (data.moveToNext()) {
-                if (data.getString(3).equals(whichActivity.toLowerCase())) {
-                    tasks.add(new taskshow(data.getString(1),data.getString(2) ,done,edit,delete));
-                    layoutManager = new LinearLayoutManager(this);
-                    adapter = new ViewHandler(tasks);
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(adapter);
-                }
-            }
-        }
-        Button addBtn = findViewById(R.id.addBtn);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), AddActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }

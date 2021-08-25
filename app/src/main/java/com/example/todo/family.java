@@ -21,6 +21,7 @@ public class family extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.showtasks);
         TextView familyLabel = findViewById(R.id.label);
+        whichActivity = "FAMILY";
         familyLabel.setText(whichActivity);
         loadData();
     }
