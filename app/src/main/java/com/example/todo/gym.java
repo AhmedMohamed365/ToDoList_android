@@ -23,6 +23,7 @@ public class gym extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.showtasks);
         TextView gymLabel  = findViewById(R.id.label);
+        whichActivity = "GYM";
         gymLabel.setText(whichActivity);
         loadData();
     }

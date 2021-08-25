@@ -23,6 +23,7 @@ public class studying extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.showtasks);
         TextView studyingLabel  = findViewById(R.id.label);
+        whichActivity = "STUDYING";
         studyingLabel.setText(whichActivity);
         loadData();
     }

@@ -50,6 +50,10 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
 //        }
         onCreate(db);
     }
+
+
+
+
 //Basic operations insert - update - retrieve - delete
     public void addTask(String title, String data, String date, String type, String priority,String status){
         SQLiteDatabase db = this.getWritableDatabase();
