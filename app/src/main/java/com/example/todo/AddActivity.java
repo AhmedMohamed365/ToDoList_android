@@ -116,7 +116,7 @@ public class AddActivity extends AppCompatActivity {
         MyDatabaseHelper myDB = new MyDatabaseHelper(this);
         //myDB.deleteTask("AHMED");
         myDB.addTask(title_input.getText().toString().trim(), data_input.getText().toString().trim(),
-               dateField.getText().toString().trim(), "WORK","","going");
+               dateField.getText().toString().trim(), whichActivity,priorityChoice,"going");
 
 //load the updated data
         loadData();
