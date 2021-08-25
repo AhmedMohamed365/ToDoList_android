@@ -51,13 +51,13 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 //Basic operations insert - update - retrieve - delete
-    public void addTask(String title, String data, int days, String type, String priority,String status){
+    public void addTask(String title, String data, String date, String type, String priority,String status){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues row = new ContentValues();
 
         row.put(COLUMN_TITLE, title);
         row.put(COLUMN_data, data);
-        row.put(COLUMN_days, days);
+        row.put(COLUMN_days,date);
         row.put(COLUMN_type, type);
         row.put(COLUMN_priority,priority);
         row.put(COLUMN_status,status);

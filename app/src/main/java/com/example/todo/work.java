@@ -1,14 +1,16 @@
 package com.example.todo;
-
 import static com.example.todo.MainActivity.whichActivity;
 import  com.example.todo.MainActivity.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,8 +37,8 @@ public class work extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         ArrayList<taskshow> tasks = new ArrayList<>();
-        MyDatabaseHelper DB = new MyDatabaseHelper(this);
-        Cursor data = DB.getListContents();
+        MyDatabaseHelper myDB= new MyDatabaseHelper(this);
+        Cursor data = myDB.getListContents();
         if (data.getCount() == 0) {
             Toast.makeText(this, "There are no contents in this list!", Toast.LENGTH_LONG).show();
         } else {
@@ -50,5 +52,13 @@ public class work extends AppCompatActivity {
                 }
             }
         }
+        Button addBtn = findViewById(R.id.addBtn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), AddActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

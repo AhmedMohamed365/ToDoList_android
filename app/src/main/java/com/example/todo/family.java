@@ -1,13 +1,14 @@
 package com.example.todo;
-
 import static com.example.todo.MainActivity.whichActivity;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,12 +20,12 @@ public class family extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.showtasks);
-        TextView familyLabel  = findViewById(R.id.label);
+        TextView familyLabel = findViewById(R.id.label);
         familyLabel.setText(whichActivity);
         loadData();
     }
-    public void loadData()
-    {
+
+    public void loadData() {
         RecyclerView recyclerView;
         RecyclerView.Adapter adapter;
         int done = R.drawable.ic_baseline_done_24;
@@ -41,7 +42,7 @@ public class family extends AppCompatActivity {
         } else {
             while (data.moveToNext()) {
                 if (data.getString(3).equals(whichActivity.toLowerCase())) {
-                    tasks.add(new taskshow(data.getString(1),data.getString(2) ,done,edit,delete));
+                    tasks.add(new taskshow(data.getString(1), data.getString(2), done, edit, delete));
                     layoutManager = new LinearLayoutManager(this);
                     adapter = new ViewHandler(tasks);
                     recyclerView.setLayoutManager(layoutManager);
@@ -49,5 +50,14 @@ public class family extends AppCompatActivity {
                 }
             }
         }
+
+        Button addBtn = findViewById(R.id.addBtn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), AddActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
