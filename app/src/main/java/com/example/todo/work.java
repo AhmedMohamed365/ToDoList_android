@@ -71,6 +71,7 @@ public class work extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
+            //recivie changges after editing in addActivity
             String taskName = intent.getStringExtra("taskName");
             String taskDescription = intent.getStringExtra("taskDescription");
 
@@ -78,6 +79,7 @@ public class work extends AppCompatActivity {
             {
                 tasks.set( CardPosition, new taskshow(taskName,taskDescription ,done,edit,delete));
                 adapter.notifyItemChanged(CardPosition);
+
             }
 
         }
@@ -86,6 +88,8 @@ public class work extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
+
+
             String taskName = intent.getStringExtra("taskName");
             int order = intent.getIntExtra("order",-1);
              CardPosition = intent.getIntExtra("CardPosition",0);
