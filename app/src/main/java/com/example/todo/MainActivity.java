@@ -12,6 +12,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getBaseContext(), work.class );
-                whichActivity  = "WORK";
+                whichActivity  = "work";
                 startActivity(intent);
             }
         });
@@ -51,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(getBaseContext(), family.class );
-                whichActivity  = "FAMILY";
+                Intent intent  = new Intent(getBaseContext(), work.class );
+                whichActivity  = "family";
                 startActivity(intent);
             }
         });
@@ -60,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(getBaseContext(), weekend.class );
-                whichActivity  = "WEEKEND";
+                Intent intent  = new Intent(getBaseContext(), work.class );
+                whichActivity  = "weekend";
                 startActivity(intent);
             }
         });
@@ -69,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(getBaseContext(), shopping.class );
-                whichActivity  = "SHOPPING";
+                Intent intent  = new Intent(getBaseContext(), work.class );
+                whichActivity  = "shopping";
                 startActivity(intent);
             }
         });
@@ -78,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(getBaseContext(), studying.class );
-                whichActivity  = "STUDYING";
+                Intent intent  = new Intent(getBaseContext(), work.class );
+                whichActivity  = "studying";
                 startActivity(intent);
             }
         });
@@ -87,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(getBaseContext(), gym.class );
-                whichActivity  = "GYM";
+                Intent intent  = new Intent(getBaseContext(), work.class );
+                whichActivity  = "gym";
                 startActivity(intent);
             }
         });

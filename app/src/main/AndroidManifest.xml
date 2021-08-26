@@ -14,21 +14,6 @@
             android:name=".AddActivity"
             android:exported="true" />
         <activity
-            android:name=".studying"
-            android:exported="true" />
-        <activity
-            android:name=".weekend"
-            android:exported="true" />
-        <activity
-            android:name=".gym"
-            android:exported="true" />
-        <activity
-            android:name=".family"
-            android:exported="true" />
-        <activity
-            android:name=".shopping"
-            android:exported="true" />
-        <activity
             android:name=".work"
             android:exported="true" />
         <activity
