@@ -35,6 +35,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
                 intent.putExtra("taskName",name.getText().toString());
                 intent.putExtra("order",order);
                 intent.putExtra("date",date.getText().toString());
+                intent.putExtra("CardPosition",getAdapterPosition());
                 LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
 
             });
@@ -45,6 +46,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
                 Intent intent = new Intent("cardOrder");
                 intent.putExtra("taskName",name.getText().toString());
                 intent.putExtra("order",order);
+                intent.putExtra("CardPosition",getAdapterPosition());
                 LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
 
 
@@ -56,6 +58,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
                 Intent intent = new Intent("cardOrder");
                 intent.putExtra("taskName",name.getText().toString());
                 intent.putExtra("order",order);
+                intent.putExtra("CardPosition",getAdapterPosition());
                 LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
             });
         }

@@ -29,10 +29,23 @@ public class work extends AppCompatActivity {
 
 
     MyDatabaseHelper myDB;
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    LinkedList<taskshow> tasks ;
+
+
+
+    //holder for selected card postion
+    int CardPosition;
+    int done,edit,delete;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.showtasks);
+
+        done = R.drawable.ic_baseline_done_24;
+         edit = R.drawable.ic_baseline_edit_24;
+         delete = R.drawable.ic_baseline_delete_24;
         myDB = new MyDatabaseHelper(this);
         TextView workLabel  = findViewById(R.id.label);
 
@@ -48,15 +61,34 @@ public class work extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("cardOrder"));
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(changesReciver,
+                new IntentFilter("changedInfo"));
+
 
     }
 
+    public BroadcastReceiver changesReciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String taskName = intent.getStringExtra("taskName");
+            String taskDescription = intent.getStringExtra("taskDescription");
+
+            if(!taskName.equals("") )
+            {
+                tasks.set( CardPosition, new taskshow(taskName,taskDescription ,done,edit,delete));
+                adapter.notifyItemChanged(CardPosition);
+            }
+
+        }
+    };
     public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String taskName = intent.getStringExtra("taskName");
             int order = intent.getIntExtra("order",-1);
+             CardPosition = intent.getIntExtra("CardPosition",0);
             Toast.makeText(work.this,taskName +" " ,Toast.LENGTH_SHORT).show();
 
             if(taskName != null)
@@ -66,13 +98,27 @@ public class work extends AppCompatActivity {
                 if(data.getCount() > 0)
                 {
                     if(order == 2)
+                    {
+                        //Delete code
                         myDB.deleteTask(taskName);
+                        //update the recycle view after deletion
+                        tasks.remove(CardPosition);
+                        recyclerView.removeViewAt(CardPosition);
+                        adapter.notifyItemRemoved(CardPosition);
+                        adapter.notifyItemRangeChanged(CardPosition, tasks.size());
+                    }
+
                     else if(order == 0)
                     {
+                        // Done code
                         myDB.updateTask(taskName,taskName,"",1,"WORK","ordinary","Done");
+                        adapter.notifyDataSetChanged();
+                     //   tasks.re
+
                     }
-                    else
+                    else if (order == 1)
                     {
+                        //Edit  code
                         Intent transferIntent  = new Intent(getBaseContext(), AddActivity.class );
                       //  whichActivity  = "WEEKEND";
 
@@ -90,31 +136,23 @@ public class work extends AppCompatActivity {
                         startActivity(transferIntent);
                     }
 
-
-                    loadData();
+                    //There is better way than that
+                   // loadData();
                 }
             }
         }
     };
 
-    //this function will update data when coming back from add Task activity
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadData();
-    }
+
 
     public  void loadData()
     {
-       RecyclerView recyclerView;
-        RecyclerView.Adapter adapter;
-        int done = R.drawable.ic_baseline_done_24;
-        int edit = R.drawable.ic_baseline_edit_24;
-        int delete = R.drawable.ic_baseline_delete_24;
+
+
         RecyclerView.LayoutManager layoutManager;
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        LinkedList<taskshow> tasks = new LinkedList<>();
+        tasks = new LinkedList<>();
 
         Cursor data = myDB.getListContents();
         if (data.getCount() == 0) {

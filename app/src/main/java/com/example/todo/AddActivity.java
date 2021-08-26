@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -94,7 +95,12 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
+
+    }
 
     public void handleAddTaskBt(View view)
     {
@@ -104,6 +110,12 @@ public class AddActivity extends AppCompatActivity {
         {
            myDB.updateTask(taskName,title_input.getText().toString(),data_input.getText().toString(),
                   1,whichActivity,priorityChoice,"on going");
+
+
+            Intent changedInfo = new Intent("changedInfo");
+            changedInfo.putExtra("taskName",title_input.getText().toString());
+            changedInfo.putExtra("taskDescription",data_input.getText().toString());
+            LocalBroadcastManager.getInstance(this).sendBroadcast(changedInfo);
         }
 
         //Add code
