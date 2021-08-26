@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class gym extends AppCompatActivity {
 
@@ -37,7 +38,7 @@ public class gym extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager;
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        ArrayList<taskshow> tasks = new ArrayList<>();
+        LinkedList<taskshow> tasks = new LinkedList<>();
         MyDatabaseHelper DB = new MyDatabaseHelper(this);
         Cursor data = DB.getListContents();
         if (data.getCount() == 0) {

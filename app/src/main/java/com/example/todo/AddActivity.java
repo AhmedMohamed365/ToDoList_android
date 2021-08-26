@@ -30,9 +30,7 @@ public class AddActivity extends AppCompatActivity {
     TextView   dateField;
     Button add_button;
     String priorityChoice = "ordinary";
-
-
-
+    String taskName,description,date;
 
     Button []priorityBts;
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -41,11 +39,23 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        String cateogry=getIntent().getStringExtra("type");
+         taskName=getIntent().getStringExtra("taskName");
+         description = getIntent().getStringExtra("description");
+         date = getIntent().getStringExtra("date");
+
         title_input= findViewById(R.id.taskName);
         data_input = findViewById(R.id.taskData);
         dateField= (TextView) findViewById(R.id.DatePicker);
         add_button = findViewById(R.id.addingTaskBtn);
+        if(taskName != null && description != null && date !=null)
+        {
+            title_input.setText(taskName);
+            data_input.setText(description);
+            dateField.setText(date);
+            add_button.setText("Save changes");
+        }
+
+
         final Calendar myCalendar = Calendar.getInstance();
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -88,12 +98,21 @@ public class AddActivity extends AppCompatActivity {
 
     public void handleAddTaskBt(View view)
     {
-
         MyDatabaseHelper myDB = new MyDatabaseHelper(this);
-        myDB.addTask(title_input.getText().toString().trim(), data_input.getText().toString().trim(),
-               dateField.getText().toString().trim(), whichActivity,priorityChoice,"going");
+        //edit Code
+        if(add_button.getText().toString().equals("Save changes"))
+        {
+           myDB.updateTask(taskName,title_input.getText().toString(),data_input.getText().toString(),
+                  1,whichActivity,priorityChoice,"on going");
+        }
 
+        //Add code
+        else {
 
+            myDB.addTask(title_input.getText().toString().trim(), data_input.getText().toString().trim(),
+                    dateField.getText().toString().trim(), whichActivity, priorityChoice, "going");
+
+        }
 
     }
    public void getPriority(View view)

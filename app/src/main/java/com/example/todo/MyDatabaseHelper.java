@@ -137,10 +137,11 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
+
    public Cursor getListContents(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return data;
     }
-}
 
+}

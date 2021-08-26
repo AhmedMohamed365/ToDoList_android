@@ -1,28 +1,26 @@
 package com.example.todo;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Debug;
-import android.util.Log;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOLDER> {
-    private  ArrayList <taskshow> tasks ;
+    private LinkedList<taskshow> tasks ;
     public static class EXAMPLEVIEWHOLDER extends RecyclerView.ViewHolder
     {
         public ImageView edit,done,delete ;
         public TextView name,date;
-
+        int order = -1;
         public EXAMPLEVIEWHOLDER(@NonNull View itemView) {
             super(itemView);
 
@@ -31,16 +29,38 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
             edit = itemView.findViewById(R.id.editImage);
             name = itemView.findViewById(R.id.nameTxt);
             date = itemView.findViewById(R.id.dateTxt);
-            delete.setOnClickListener(view -> {
-
-                //delete the requested task
-                Intent intent = new Intent("deleteOrder");
+            edit.setOnClickListener(view -> {
+                order = 1;
+                Intent intent = new Intent("cardOrder");
                 intent.putExtra("taskName",name.getText().toString());
+                intent.putExtra("order",order);
+                intent.putExtra("date",date.getText().toString());
+                LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
+
+            });
+            done.setOnClickListener(view -> {
+
+                itemView.setBackgroundColor(Color.GREEN);
+                order = 0;
+                Intent intent = new Intent("cardOrder");
+                intent.putExtra("taskName",name.getText().toString());
+                intent.putExtra("order",order);
+                LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
+
+
+
+            });
+            delete.setOnClickListener(view -> {
+                order = 2;
+                //delete the requested task
+                Intent intent = new Intent("cardOrder");
+                intent.putExtra("taskName",name.getText().toString());
+                intent.putExtra("order",order);
                 LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
             });
         }
     }
-    public ViewHandler(ArrayList<taskshow> examplist)
+    public ViewHandler(LinkedList<taskshow> examplist)
     {
         tasks = examplist ;
     }
