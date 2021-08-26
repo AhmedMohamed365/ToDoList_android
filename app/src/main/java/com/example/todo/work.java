@@ -78,6 +78,13 @@ public class work extends AppCompatActivity {
                         //we need to transfer the task we want to edit now and change add Bt to save changes
                       //  transferIntent.putExtra("taskName",taskName);
 
+                        while (data.moveToNext()) {
+                            if (data.getString(3).equals(whichActivity) && data.getString(1).equals(taskName)) {
+                                transferIntent.putExtra("taskName",taskName);
+                                transferIntent.putExtra("description",data.getString(2));
+                                transferIntent.putExtra("date",data.getString(4));
+                            }
+                        }
                        // transferIntent.putExtra("taskName",taskName);
                         startActivity(transferIntent);
                     }
