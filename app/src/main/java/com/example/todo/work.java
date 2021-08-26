@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class work extends AppCompatActivity {
 
@@ -113,7 +114,7 @@ public class work extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager;
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        ArrayList<taskshow> tasks = new ArrayList<>();
+        LinkedList<taskshow> tasks = new LinkedList<>();
 
         Cursor data = myDB.getListContents();
         if (data.getCount() == 0) {

@@ -1,24 +1,21 @@
 package com.example.todo;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Debug;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOLDER> {
-    private  ArrayList <taskshow> tasks ;
+    private LinkedList<taskshow> tasks ;
     public static class EXAMPLEVIEWHOLDER extends RecyclerView.ViewHolder
     {
         public ImageView edit,done,delete ;
@@ -63,7 +60,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
             });
         }
     }
-    public ViewHandler(ArrayList<taskshow> examplist)
+    public ViewHandler(LinkedList<taskshow> examplist)
     {
         tasks = examplist ;
     }
