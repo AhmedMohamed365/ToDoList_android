@@ -48,7 +48,7 @@ public class AddActivity extends AppCompatActivity {
         data_input = findViewById(R.id.taskData);
         dateField= (TextView) findViewById(R.id.DatePicker);
         add_button = findViewById(R.id.addingTaskBtn);
-        if(taskName != null && description != null && date !=null)
+        if(taskName != null && description != null)
         {
             title_input.setText(taskName);
             data_input.setText(description);
@@ -105,6 +105,12 @@ public class AddActivity extends AppCompatActivity {
     public void handleAddTaskBt(View view)
     {
         MyDatabaseHelper myDB = new MyDatabaseHelper(this);
+
+        Intent changedInfo = new Intent("changedInfo");
+
+        changedInfo.putExtra("taskName",title_input.getText().toString());
+        changedInfo.putExtra("taskDescription",data_input.getText().toString());
+
         //edit Code
         if(add_button.getText().toString().equals("Save changes"))
         {
@@ -112,19 +118,24 @@ public class AddActivity extends AppCompatActivity {
                   1,whichActivity,priorityChoice,"on going");
 
 
-            Intent changedInfo = new Intent("changedInfo");
-            changedInfo.putExtra("taskName",title_input.getText().toString());
-            changedInfo.putExtra("taskDescription",data_input.getText().toString());
-            LocalBroadcastManager.getInstance(this).sendBroadcast(changedInfo);
+
+            changedInfo.putExtra("edited", true);
+
         }
 
         //Add code
         else {
 
+
+
+            changedInfo.putExtra("edited", false);
             myDB.addTask(title_input.getText().toString().trim(), data_input.getText().toString().trim(),
                     dateField.getText().toString().trim(), whichActivity, priorityChoice, "going");
 
         }
+
+
+        LocalBroadcastManager.getInstance(this).sendBroadcast(changedInfo);
 
     }
    public void getPriority(View view)

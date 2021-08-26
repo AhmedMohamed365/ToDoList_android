@@ -34,7 +34,7 @@ public class work extends AppCompatActivity {
     LinkedList<taskshow> tasks ;
 
 
-
+    String selected_taskName,selected_taskDescription;
     //holder for selected card postion
     int CardPosition;
     int done,edit,delete;
@@ -74,11 +74,21 @@ public class work extends AppCompatActivity {
             //recivie changges after editing in addActivity
             String taskName = intent.getStringExtra("taskName");
             String taskDescription = intent.getStringExtra("taskDescription");
-
+            boolean edited = intent.getBooleanExtra("edited",false);
             if(!taskName.equals("") )
             {
-                tasks.set( CardPosition, new taskshow(taskName,taskDescription ,done,edit,delete));
-                adapter.notifyItemChanged(CardPosition);
+                if( edited)
+                {
+                    tasks.set( CardPosition, new taskshow(taskName,taskDescription ,done,edit,delete));
+                    adapter.notifyItemChanged(CardPosition);
+                }
+
+                else
+                {
+                    tasks.add(  new taskshow(taskName,taskDescription ,done,edit,delete));
+                    adapter.notifyDataSetChanged();
+                }
+
 
             }
 
@@ -90,12 +100,13 @@ public class work extends AppCompatActivity {
             // Get extra data included in the Intent
 
 
-            String taskName = intent.getStringExtra("taskName");
+             selected_taskName = intent.getStringExtra("taskName");
+             selected_taskDescription = intent.getStringExtra("date");
             int order = intent.getIntExtra("order",-1);
              CardPosition = intent.getIntExtra("CardPosition",0);
-            Toast.makeText(work.this,taskName +" " ,Toast.LENGTH_SHORT).show();
+            Toast.makeText(work.this,selected_taskName +" " ,Toast.LENGTH_SHORT).show();
 
-            if(taskName != null)
+            if(selected_taskName != null)
             {
                 Cursor data = myDB.getListContents();
 
@@ -104,7 +115,7 @@ public class work extends AppCompatActivity {
                     if(order == 2)
                     {
                         //Delete code
-                        myDB.deleteTask(taskName);
+                        myDB.deleteTask(selected_taskName);
                         //update the recycle view after deletion
                         tasks.remove(CardPosition);
                         recyclerView.removeViewAt(CardPosition);
@@ -115,7 +126,7 @@ public class work extends AppCompatActivity {
                     else if(order == 0)
                     {
                         // Done code
-                        myDB.updateTask(taskName,taskName,"",1,"WORK","ordinary","Done");
+                        myDB.updateTask(selected_taskName,selected_taskName,"",1,"WORK","ordinary","Done");
                         adapter.notifyDataSetChanged();
                      //   tasks.re
 
@@ -128,15 +139,31 @@ public class work extends AppCompatActivity {
 
                         //we need to transfer the task we want to edit now and change add Bt to save changes
                       //  transferIntent.putExtra("taskName",taskName);
+                        //update list contents
 
-                        while (data.moveToNext()) {
-                            if (data.getString(3).equals(whichActivity) && data.getString(1).equals(taskName)) {
-                                transferIntent.putExtra("taskName",taskName);
-                                transferIntent.putExtra("description",data.getString(2));
-                                transferIntent.putExtra("date",data.getString(4));
-                            }
-                        }
-                       // transferIntent.putExtra("taskName",taskName);
+                        /*Old method for updating after editing
+                        *
+                                *   while (data.moveToNext()) {
+                                    if (data.getString(3).equals(whichActivity) && data.getString(1).equals(selected_taskName)) {
+                                        transferIntent.putExtra("taskName",selected_taskName);
+                                        transferIntent.putExtra("description",data.getString(2));
+                                        transferIntent.putExtra("date",data.getString(4));
+                                    }
+                                }
+                        *
+                        *
+                        *
+                        *
+                        * */
+                     //   data = myDB.getListContents();
+
+
+
+                        transferIntent.putExtra("taskName",selected_taskName);
+                        transferIntent.putExtra("description",selected_taskDescription);
+                        /* date will be sent later when we add it well in the design*********/
+                        //transferIntent.putExtra("date",data.getString(4));
+
                         startActivity(transferIntent);
                     }
 

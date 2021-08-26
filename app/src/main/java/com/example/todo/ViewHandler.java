@@ -33,6 +33,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
                 order = 1;
                 Intent intent = new Intent("cardOrder");
                 intent.putExtra("taskName",name.getText().toString());
+
                 intent.putExtra("order",order);
                 intent.putExtra("date",date.getText().toString());
                 intent.putExtra("CardPosition",getAdapterPosition());
