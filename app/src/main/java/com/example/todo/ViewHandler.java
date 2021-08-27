@@ -22,6 +22,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         TextView name,data,deadline;
         RelativeLayout relativeLayout;
         int order = -1;
+
         public EXAMPLEVIEWHOLDER(@NonNull View itemView) {
             super(itemView);
             delete = itemView.findViewById(R.id.deleteImage);
@@ -37,6 +38,8 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
                 intent.putExtra("taskName",name.getText().toString());
                 intent.putExtra("order",order);
                 intent.putExtra("data",data.getText().toString());
+                intent.putExtra("date",deadline.getText().toString());
+                intent.putExtra("CardPosition",getAdapterPosition());
                 LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
 
             });
@@ -46,6 +49,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
                 Intent intent = new Intent("cardOrder");
                 intent.putExtra("taskName",name.getText().toString());
                 intent.putExtra("order",order);
+                intent.putExtra("CardPosition",getAdapterPosition());
                 LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
             });
             delete.setOnClickListener(view -> {
@@ -53,6 +57,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
                 //delete the requested task
                 Intent intent = new Intent("cardOrder");
                 intent.putExtra("taskName",name.getText().toString());
+                intent.putExtra("CardPosition",getAdapterPosition());
                 intent.putExtra("order",order);
                 LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
             });
@@ -62,13 +67,27 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
     {
         tasks = examplist ;
     }
+
+//    @Override
+//    public int getItemViewType(int position) {
+//
+//       //implement for later
+//    }
+
     @NonNull
     @Override
     public EXAMPLEVIEWHOLDER onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewlistcontents_layout,parent,false);
+
+//        if(true)
+//        {
+//            v.setBackgroundColor(Color.GREEN);
+//        }
         EXAMPLEVIEWHOLDER evh = new EXAMPLEVIEWHOLDER(v);
+
         return evh ;
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull EXAMPLEVIEWHOLDER holder, int position) {

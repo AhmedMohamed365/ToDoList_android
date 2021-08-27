@@ -35,7 +35,7 @@ public class work extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     LinkedList<taskshow> tasks ;
-    String selected_taskName,selected_taskDescription;
+    String selected_taskName,selected_taskDescription , selected_date;
     Switch showDone;
     //holder for selected card postion
     int CardPosition;
@@ -83,6 +83,7 @@ public class work extends AppCompatActivity {
             //recivie changges after editing in addActivity
             String taskName = intent.getStringExtra("taskName");
             String taskDescription = intent.getStringExtra("taskDescription");
+            String taskDate = intent.getStringExtra("taskDate");
             boolean edited = intent.getBooleanExtra("edited",false);
             if(!taskName.equals("") )
             {
@@ -90,15 +91,17 @@ public class work extends AppCompatActivity {
                 {
                     // ahmed edit mkn el deadline hena :)
                     // 7t variable 3la 7sb el function
-                    tasks.set( CardPosition, new taskshow(taskName,taskDescription,"" ,done,edit,delete));
+                    tasks.set( CardPosition, new taskshow(taskName,taskDescription,taskDate ,done,edit,delete));
                     adapter.notifyItemChanged(CardPosition);
                 }
 
                 else
                 {
                     // we hena kman :)
-                    tasks.add(  new taskshow(taskName,taskDescription,"" ,done,edit,delete));
-                    adapter.notifyDataSetChanged();
+                    tasks.add(  new taskshow(taskName,taskDescription,taskDate ,done,edit,delete));
+
+                    loadData();
+                    //adapter.notifyDataSetChanged();
                 }
 
 
@@ -113,33 +116,39 @@ public class work extends AppCompatActivity {
 
 
              selected_taskName = intent.getStringExtra("taskName");
-             selected_taskDescription = intent.getStringExtra("date");
+             Log.println(Log.ERROR,"selectedTask",selected_taskName);
+             selected_taskDescription = intent.getStringExtra("data");
+            selected_date = intent.getStringExtra("date");
             int order = intent.getIntExtra("order",-1);
              CardPosition = intent.getIntExtra("CardPosition",0);
+
+
             Toast.makeText(work.this,selected_taskName +" " ,Toast.LENGTH_SHORT).show();
 
             if(selected_taskName != null)
             {
                 Cursor data = myDB.getListContents();
 
-                if(data.getCount() > 0)
+                if(data.getCount() >= 0)
                 {
                     if(order == 2)
                     {
                         //Delete code
                         myDB.deleteTask(selected_taskName);
+                        loadData();
                         //update the recycle view after deletion
-                        tasks.remove(CardPosition);
-                        recyclerView.removeViewAt(CardPosition);
-                        adapter.notifyItemRemoved(CardPosition);
-                        adapter.notifyItemRangeChanged(CardPosition, tasks.size());
+//                        tasks.remove(CardPosition);
+//                        recyclerView.removeViewAt(CardPosition);
+//                        adapter.notifyItemRemoved(CardPosition);
+//                        adapter.notifyItemRangeChanged(CardPosition, tasks.size());
                     }
 
                     else if(order == 0)
                     {
                         // Done code
-                        myDB.updateTask(selected_taskName,selected_taskName,"",1,"WORK","ordinary","Done");
-                        adapter.notifyDataSetChanged();
+                        myDB.updateTask(selected_taskName,selected_taskName,selected_taskDescription,selected_date,"WORK","ordinary","Done");
+                       // adapter.notifyDataSetChanged();
+                        loadData();
                      //   tasks.re
 
                     }
@@ -173,11 +182,14 @@ public class work extends AppCompatActivity {
 
                         transferIntent.putExtra("taskName",selected_taskName);
                         transferIntent.putExtra("description",selected_taskDescription);
+                        transferIntent.putExtra("date",selected_date);
                         /* date will be sent later when we add it well in the design*********/
 
                         //transferIntent.putExtra("date",data.getString(4));
 
                         startActivity(transferIntent);
+
+                        loadData();
                     }
 
                     //There is better way than that
@@ -194,18 +206,26 @@ public class work extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         tasks = new LinkedList<>();
-
+        //variable to set Done Cards to green
+        View card;
         Cursor data = myDB.getListContents();
         if (data.getCount() == 0) {
-            Toast.makeText(this, "There are no contents in this list!", Toast.LENGTH_LONG).show();
+            layoutManager = new LinearLayoutManager(this);
+            adapter = new ViewHandler(tasks);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(adapter);
         } else {
             while (data.moveToNext()) {
                 if (data.getString(3).equals(whichActivity)) {
                     tasks.add(new taskshow(data.getString(1),data.getString(2),data.getString(4) ,done,edit,delete));
+
+// Implement a way to color Done cards in the begining
+
                     layoutManager = new LinearLayoutManager(this);
                     adapter = new ViewHandler(tasks);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(adapter);
+
                 }
             }
         }

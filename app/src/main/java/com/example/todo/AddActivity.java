@@ -48,7 +48,7 @@ public class AddActivity extends AppCompatActivity {
         data_input = findViewById(R.id.taskData);
         dateField= (TextView) findViewById(R.id.DatePicker);
         add_button = findViewById(R.id.addingTaskBtn);
-        if(taskName != null && description != null)
+        if(taskName != null || description != null)
         {
             title_input.setText(taskName);
             data_input.setText(description);
@@ -110,11 +110,12 @@ public class AddActivity extends AppCompatActivity {
 
         changedInfo.putExtra("taskName",title_input.getText().toString());
         changedInfo.putExtra("taskDescription",data_input.getText().toString());
+        changedInfo.putExtra("taskDate",dateField.getText().toString());
 
         //edit Code
         if(add_button.getText().toString().equals("Save changes"))
         {
-           myDB.updateTask(taskName,title_input.getText().toString(),data_input.getText().toString(),1
+           myDB.updateTask(taskName,title_input.getText().toString(),data_input.getText().toString(),dateField.getText().toString()
                   ,whichActivity,priorityChoice,"going");
             changedInfo.putExtra("edited", true);
         }
@@ -127,8 +128,11 @@ public class AddActivity extends AppCompatActivity {
         }
 
 
+
         LocalBroadcastManager.getInstance(this).sendBroadcast(changedInfo);
 
+        Intent intent = new Intent(getBaseContext(),work.class);
+        startActivity(intent);
     }
    public void getPriority(View view)
     {

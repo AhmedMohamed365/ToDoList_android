@@ -74,13 +74,13 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void updateTask(String title,String newTitle, String data, int days,String type,String priority,String status){
+    public void updateTask(String title,String newTitle, String data, String date,String type,String priority,String status){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues newRowContent = new ContentValues();
 
         newRowContent.put(COLUMN_TITLE, newTitle);
         newRowContent.put(COLUMN_data, data);
-        newRowContent.put(COLUMN_days, days);
+        newRowContent.put(COLUMN_days, date);
         newRowContent.put(COLUMN_type, type);
         newRowContent.put(COLUMN_priority,priority);
         newRowContent.put(COLUMN_status,status);
