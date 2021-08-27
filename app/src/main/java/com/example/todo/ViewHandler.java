@@ -5,38 +5,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-
 public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOLDER> {
     private LinkedList<taskshow> tasks ;
     public static class EXAMPLEVIEWHOLDER extends RecyclerView.ViewHolder
     {
-        public ImageView edit,done,delete ;
-        public TextView name,date;
+        ImageView edit,done,delete ;
+        TextView name,data,deadline;
+        RelativeLayout relativeLayout;
         int order = -1;
         public EXAMPLEVIEWHOLDER(@NonNull View itemView) {
             super(itemView);
-
             delete = itemView.findViewById(R.id.deleteImage);
             done = itemView.findViewById(R.id.doneImage);
             edit = itemView.findViewById(R.id.editImage);
             name = itemView.findViewById(R.id.nameTxt);
-            date = itemView.findViewById(R.id.dateTxt);
+            data = itemView.findViewById(R.id.dataTxt);
+            deadline = itemView.findViewById(R.id.deadLine);
+            relativeLayout = itemView.findViewById(R.id.relative);
             edit.setOnClickListener(view -> {
                 order = 1;
                 Intent intent = new Intent("cardOrder");
                 intent.putExtra("taskName",name.getText().toString());
-
                 intent.putExtra("order",order);
-                intent.putExtra("date",date.getText().toString());
-                intent.putExtra("CardPosition",getAdapterPosition());
+                intent.putExtra("data",data.getText().toString());
                 LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
 
             });
@@ -47,7 +47,6 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
                 Intent intent = new Intent("cardOrder");
                 intent.putExtra("taskName",name.getText().toString());
                 intent.putExtra("order",order);
-                intent.putExtra("CardPosition",getAdapterPosition());
                 LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
 
 
@@ -59,7 +58,6 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
                 Intent intent = new Intent("cardOrder");
                 intent.putExtra("taskName",name.getText().toString());
                 intent.putExtra("order",order);
-                intent.putExtra("CardPosition",getAdapterPosition());
                 LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
             });
         }
@@ -83,7 +81,8 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         holder.delete.setImageResource(currentItem.getDeletePic());
         holder.done.setImageResource(currentItem.getDonePic());
         holder.name.setText(currentItem.getName());
-        holder.date.setText(currentItem.getDate());
+        holder.data.setText(currentItem.getData());
+        holder.deadline.setText(currentItem.getDeadline());
 
     }
     @Override

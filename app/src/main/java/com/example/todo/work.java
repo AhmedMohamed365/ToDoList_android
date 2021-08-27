@@ -79,13 +79,16 @@ public class work extends AppCompatActivity {
             {
                 if( edited)
                 {
-                    tasks.set( CardPosition, new taskshow(taskName,taskDescription ,done,edit,delete));
+                    // ahmed edit mkn el deadline hena :)
+                    // 7t variable 3la 7sb el function
+                    tasks.set( CardPosition, new taskshow(taskName,taskDescription,"" ,done,edit,delete));
                     adapter.notifyItemChanged(CardPosition);
                 }
 
                 else
                 {
-                    tasks.add(  new taskshow(taskName,taskDescription ,done,edit,delete));
+                    // we hena kman :)
+                    tasks.add(  new taskshow(taskName,taskDescription,"" ,done,edit,delete));
                     adapter.notifyDataSetChanged();
                 }
 
@@ -191,7 +194,7 @@ public class work extends AppCompatActivity {
         } else {
             while (data.moveToNext()) {
                 if (data.getString(3).equals(whichActivity)) {
-                    tasks.add(new taskshow(data.getString(1),data.getString(2) ,done,edit,delete));
+                    tasks.add(new taskshow(data.getString(1),data.getString(2),data.getString(4) ,done,edit,delete));
                     layoutManager = new LinearLayoutManager(this);
                     adapter = new ViewHandler(tasks);
                     recyclerView.setLayoutManager(layoutManager);

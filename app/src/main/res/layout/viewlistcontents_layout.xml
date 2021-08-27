@@ -3,24 +3,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="73dp"
+    android:layout_height="wrap_content"
     android:padding="15dp"
     app:cardBackgroundColor="#00FFFFFF"
     app:cardCornerRadius="4dp"
     tools:ignore="ExtraText">
 
     <RelativeLayout
+        android:id="@+id/relative"
         android:layout_width="match_parent"
-        android:layout_height="73dp">
+        android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/dateTxt"
-            android:layout_width="113dp"
-            android:layout_height="48dp"
+            android:id="@+id/deadLine"
+            android:layout_width="106dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="157dp"
+            android:layout_marginRight="157dp"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dataTxt"
+            android:layout_width="106dp"
+            android:layout_height="43dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="164dp"
             android:layout_marginRight="164dp"
             android:foregroundGravity="center"
@@ -35,7 +51,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="288dp"
             android:layout_marginRight="288dp"
             android:foregroundGravity="center"
@@ -50,7 +66,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="19dp"
+            android:layout_marginTop="45dp"
             android:layout_marginEnd="33dp"
             android:layout_marginRight="33dp"
             android:contentDescription="@string/delete"
@@ -65,7 +81,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="45dp"
             android:layout_marginEnd="69dp"
             android:layout_marginRight="69dp"
             android:contentDescription="@string/edit"
@@ -80,13 +96,14 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="19dp"
+            android:layout_marginTop="45dp"
             android:layout_marginEnd="114dp"
             android:layout_marginRight="114dp"
             android:contentDescription="@string/done"
             android:foregroundGravity="center"
             app:srcCompat="@drawable/ic_baseline_done_outline_24"
             tools:ignore="VectorDrawableCompat" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
