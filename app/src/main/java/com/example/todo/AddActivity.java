@@ -114,20 +114,12 @@ public class AddActivity extends AppCompatActivity {
         //edit Code
         if(add_button.getText().toString().equals("Save changes"))
         {
-           myDB.updateTask(taskName,title_input.getText().toString(),data_input.getText().toString(),
-                  1,whichActivity,priorityChoice,"on going");
-
-
-
+           myDB.updateTask(taskName,title_input.getText().toString(),data_input.getText().toString(),1
+                  ,whichActivity,priorityChoice,"going");
             changedInfo.putExtra("edited", true);
-
         }
-
         //Add code
         else {
-
-
-
             changedInfo.putExtra("edited", false);
             myDB.addTask(title_input.getText().toString().trim(), data_input.getText().toString().trim(),
                     dateField.getText().toString().trim(), whichActivity, priorityChoice, "going");

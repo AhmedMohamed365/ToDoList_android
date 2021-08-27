@@ -41,16 +41,12 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
 
             });
             done.setOnClickListener(view -> {
-
                 itemView.setBackgroundColor(Color.GREEN);
                 order = 0;
                 Intent intent = new Intent("cardOrder");
                 intent.putExtra("taskName",name.getText().toString());
                 intent.putExtra("order",order);
                 LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
-
-
-
             });
             delete.setOnClickListener(view -> {
                 order = 2;
