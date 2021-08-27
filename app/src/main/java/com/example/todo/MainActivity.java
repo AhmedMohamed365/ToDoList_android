@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Button button5;
     Button button6;
     static String whichActivity = "main";
-    static String shwoDone = "dont";
+    static boolean shwoDone = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

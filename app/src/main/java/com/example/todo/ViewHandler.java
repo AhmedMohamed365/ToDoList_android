@@ -14,6 +14,9 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.LinkedList;
+
+import static com.example.todo.MainActivity.shwoDone;
+
 public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOLDER> {
     private LinkedList<taskshow> tasks ;
     public static class EXAMPLEVIEWHOLDER extends RecyclerView.ViewHolder
@@ -32,6 +35,13 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
             data = itemView.findViewById(R.id.dataTxt);
             deadline = itemView.findViewById(R.id.deadLine);
             relativeLayout = itemView.findViewById(R.id.relative);
+
+            if(shwoDone)
+            {
+                edit.setEnabled(false);
+                done.setEnabled(false);
+
+            }
             edit.setOnClickListener(view -> {
                 order = 1;
                 Intent intent = new Intent("cardOrder");
@@ -44,10 +54,14 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
 
             });
             done.setOnClickListener(view -> {
+
+
                 itemView.setBackgroundColor(Color.GREEN);
                 order = 0;
                 Intent intent = new Intent("cardOrder");
                 intent.putExtra("taskName",name.getText().toString());
+                intent.putExtra("data",data.getText().toString());
+                intent.putExtra("date",deadline.getText().toString());
                 intent.putExtra("order",order);
                 intent.putExtra("CardPosition",getAdapterPosition());
                 LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);

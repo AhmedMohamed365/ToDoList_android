@@ -2,6 +2,8 @@ package com.example.todo;
 import static com.example.todo.MainActivity.shwoDone;
 import static com.example.todo.MainActivity.whichActivity;
 import  com.example.todo.MainActivity.*;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +16,7 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
 import android.util.Log;
@@ -37,9 +40,11 @@ public class work extends AppCompatActivity {
     LinkedList<taskshow> tasks ;
     String selected_taskName,selected_taskDescription , selected_date;
     Switch showDone;
+
     //holder for selected card postion
     int CardPosition;
     int done,edit,delete;
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,13 +64,17 @@ public class work extends AppCompatActivity {
         showDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    shwoDone = "show";
+                    shwoDone = true;
                 } else {
-                    shwoDone = "dont";
+                    shwoDone = false;
                 }
+
+                loadData();
             }
         });
-        workLabel.setText(whichActivity);
+        workLabel.setText(whichActivity.toUpperCase());
+        workLabel.setTextSelectHandleLeft(R.drawable.f);
+
         loadData();
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
@@ -146,7 +155,7 @@ public class work extends AppCompatActivity {
                     else if(order == 0)
                     {
                         // Done code
-                        myDB.updateTask(selected_taskName,selected_taskName,selected_taskDescription,selected_date,"WORK","ordinary","Done");
+                        myDB.updateTask(selected_taskName,selected_taskName,selected_taskDescription,selected_date,whichActivity,"ordinary","Done");
                        // adapter.notifyDataSetChanged();
                         loadData();
                      //   tasks.re
@@ -217,7 +226,18 @@ public class work extends AppCompatActivity {
         } else {
             while (data.moveToNext()) {
                 if (data.getString(3).equals(whichActivity)) {
-                    tasks.add(new taskshow(data.getString(1),data.getString(2),data.getString(4) ,done,edit,delete));
+
+                    if(shwoDone && data.getString(6).equals("Done"))
+                    {
+                        tasks.add(new taskshow(data.getString(1),data.getString(2),data.getString(4) ,done,edit,delete));
+
+
+                    }
+                    else if (shwoDone == false &&  data.getString(6).equals("going"))
+                    {
+                        tasks.add(new taskshow(data.getString(1),data.getString(2),data.getString(4) ,done,edit,delete));
+                    }
+
 
 // Implement a way to color Done cards in the begining
 
