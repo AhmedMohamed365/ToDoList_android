@@ -1,4 +1,5 @@
 package com.example.todo;
+import static com.example.todo.MainActivity.shwoDone;
 import static com.example.todo.MainActivity.whichActivity;
 import  com.example.todo.MainActivity.*;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +19,9 @@ import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,9 +35,8 @@ public class work extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     LinkedList<taskshow> tasks ;
-
-
     String selected_taskName,selected_taskDescription;
+    Switch showDone;
     //holder for selected card postion
     int CardPosition;
     int done,edit,delete;
@@ -42,7 +44,6 @@ public class work extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.showtasks);
-
         done = R.drawable.ic_baseline_done_24;
          edit = R.drawable.ic_baseline_edit_24;
          delete = R.drawable.ic_baseline_delete_24;
@@ -54,7 +55,16 @@ public class work extends AppCompatActivity {
             Intent intent = new Intent(getBaseContext(), AddActivity.class);
             startActivity(intent);
         });
-
+        showDone = (Switch) findViewById(R.id.showDone);
+        showDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    shwoDone = "show";
+                } else {
+                    shwoDone = "dont";
+                }
+            }
+        });
         workLabel.setText(whichActivity);
         loadData();
 
@@ -66,7 +76,6 @@ public class work extends AppCompatActivity {
 
 
     }
-
     public BroadcastReceiver changesReciver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -176,9 +185,6 @@ public class work extends AppCompatActivity {
             }
         }
     };
-
-
-
     public  void loadData()
     {
 
@@ -202,6 +208,5 @@ public class work extends AppCompatActivity {
                 }
             }
         }
-
     }
 }
