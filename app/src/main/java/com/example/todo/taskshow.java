@@ -2,24 +2,31 @@ package com.example.todo;
 
 public class taskshow {
     private String name;
-    private String date;
+    private String data;
+    private String deadline;
     private int donePic ;
     private int deletePic ;
     private int editPic ;
-    public taskshow (String name ,String date,int donePic ,int editPic ,int deletePic )
+    public taskshow (String name ,String data,String deadline,int donePic ,int editPic ,int deletePic )
     {
         this.name = name;
-        this.date=date;
+        this.data=data;
+        this.deadline = deadline;
         this.deletePic  =deletePic;
         this.donePic = donePic ;
         this.editPic = editPic ;
     }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 
     public void setDonePic(int donePic) {
@@ -38,8 +45,12 @@ public class taskshow {
         return name;
     }
 
-    public String getDate() {
-        return date;
+    public String getData() {
+        return data;
+    }
+
+    public String getDeadline() {
+        return deadline;
     }
 
     public int getDonePic() {

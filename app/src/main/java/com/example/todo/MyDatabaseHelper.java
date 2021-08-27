@@ -14,7 +14,6 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
     private static final String DATABASE_NAME = "to_do_list";
     private static final int DATABASE_VERSION = 1;
-
     private static final String TABLE_NAME = "mytask";
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_TITLE = "task_title";
@@ -35,7 +34,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TITLE + " TEXT, " +
                 COLUMN_data + " TEXT, "+
                 COLUMN_type + " TEXT, "+
-                COLUMN_days + " INTEGER,"+
+                COLUMN_days + " TEXT,"+
         COLUMN_priority +" TEXT,"+
         COLUMN_status+" TEXT );" ;
         db.execSQL(query);
@@ -55,13 +54,13 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
 
 
 //Basic operations insert - update - retrieve - delete
-    public void addTask(String title, String data, String date, String type, String priority,String status){
+    public void addTask(String name, String data, String deadLine, String type, String priority,String status){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues row = new ContentValues();
 
-        row.put(COLUMN_TITLE, title);
+        row.put(COLUMN_TITLE, name);
         row.put(COLUMN_data, data);
-        row.put(COLUMN_days,date);
+        row.put(COLUMN_days,deadLine);
         row.put(COLUMN_type, type);
         row.put(COLUMN_priority,priority);
         row.put(COLUMN_status,status);
