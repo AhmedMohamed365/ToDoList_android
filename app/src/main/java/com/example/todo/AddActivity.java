@@ -1,5 +1,6 @@
 package com.example.todo;
 
+import static com.example.todo.MainActivity.tempWhich;
 import static com.example.todo.MainActivity.whichActivity;
 
 import android.app.DatePickerDialog;
@@ -98,7 +99,7 @@ public class AddActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
+//finish();
 
     }
 
@@ -133,8 +134,15 @@ public class AddActivity extends AppCompatActivity {
 
 //        Intent intent = new Intent(getBaseContext(),work.class);
 //        startActivity(intent);
+//        finish();
 
+//        Intent intent = new Intent(getBaseContext(),MainActivity.class);
+//        startActivity(intent);
+//        Intent intent2 = new Intent(getBaseContext(),work.class);
+//        startActivity(intent2);
     }
+
+
    public void getPriority(View view)
     {
 
