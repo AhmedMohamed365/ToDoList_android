@@ -73,7 +73,18 @@ public class work extends AppCompatActivity {
             }
         });
         workLabel.setText(whichActivity.toUpperCase());
-        workLabel.setTextSelectHandleLeft(R.drawable.f);
+        if(whichActivity.equals("work"))
+            workLabel.setCompoundDrawablesWithIntrinsicBounds(R.drawable.w, 0, 0, 0);
+        else if(whichActivity.equals("family"))
+            workLabel.setCompoundDrawablesWithIntrinsicBounds(R.drawable.fam, 0, 0, 0);
+        else if(whichActivity.equals("gym"))
+            workLabel.setCompoundDrawablesWithIntrinsicBounds(R.drawable.fitness, 0, 0, 0);
+        else if(whichActivity.equals("studying"))
+            workLabel.setCompoundDrawablesWithIntrinsicBounds(R.drawable.studying, 0, 0, 0);
+        else if(whichActivity.equals("shopping"))
+            workLabel.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sh, 0, 0, 0);
+        else if(whichActivity.equals("weekend"))
+            workLabel.setCompoundDrawablesWithIntrinsicBounds(R.drawable.we, 0, 0, 0);
 
         loadData();
 

@@ -131,8 +131,9 @@ public class AddActivity extends AppCompatActivity {
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(changedInfo);
 
-        Intent intent = new Intent(getBaseContext(),work.class);
-        startActivity(intent);
+//        Intent intent = new Intent(getBaseContext(),work.class);
+//        startActivity(intent);
+
     }
    public void getPriority(View view)
     {

@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getBaseContext(), work.class );
-                whichActivity  = "WORK";
+                whichActivity  = "work";
                 startActivity(intent);
             }
         });
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        button3 =findViewById(R.id.button3);
+        button3 =   findViewById(R.id.button3);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
