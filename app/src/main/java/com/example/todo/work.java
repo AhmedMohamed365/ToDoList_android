@@ -162,6 +162,7 @@ public class work extends AppCompatActivity {
                         transferIntent.putExtra("taskName",selected_taskName);
                         transferIntent.putExtra("description",selected_taskDescription);
                         /* date will be sent later when we add it well in the design*********/
+
                         //transferIntent.putExtra("date",data.getString(4));
 
                         startActivity(transferIntent);
