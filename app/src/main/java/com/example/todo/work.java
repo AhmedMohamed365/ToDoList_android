@@ -170,7 +170,6 @@ public class work extends AppCompatActivity {
                        // adapter.notifyDataSetChanged();
                         loadData();
                      //   tasks.re
-
                     }
                     else if (order == 1)
                     {
