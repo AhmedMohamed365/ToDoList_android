@@ -173,8 +173,7 @@ public class work extends AppCompatActivity {
                     }
                     else if (order == 1)
                     {
-                        Intent current  = new Intent(getBaseContext(), work.class );
-                        Intent co  = new Intent(getBaseContext(), MainActivity.class );
+
                         //Edit  code
                         Intent transferIntent  = new Intent(getBaseContext(), AddActivity.class );
                       //  whichActivity  = "WEEKEND";
@@ -205,16 +204,13 @@ public class work extends AppCompatActivity {
                         transferIntent.putExtra("description",selected_taskDescription);
                         transferIntent.putExtra("date",selected_date);
 
-                        current.putExtra("taskName",selected_taskName);
-                        current.putExtra("description",selected_taskDescription);
-                        current.putExtra("date",selected_date);
+
                         /* date will be sent later when we add it well in the design*********/
 
                         //transferIntent.putExtra("date",data.getString(4));
-                        startActivity(co);
-                        startActivity(current);
+
                         startActivity(transferIntent);
-                        loadData();
+                        //loadData();
                     }
 
                     //There is better way than that
@@ -223,6 +219,15 @@ public class work extends AppCompatActivity {
             }
         }
     };
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loadData();
+    }
+
     public  void loadData()
     {
 
