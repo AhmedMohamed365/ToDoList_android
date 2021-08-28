@@ -6,6 +6,7 @@ import static com.example.todo.MainActivity.whichActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
@@ -106,6 +107,9 @@ public class AddActivity extends AppCompatActivity {
     public void handleAddTaskBt(View view)
     {
         MyDatabaseHelper myDB = new MyDatabaseHelper(this);
+        SQLiteDatabase db = myDB.getReadableDatabase();
+        Cursor data = db.rawQuery("select * from mytask where task_title = ?" ,new String[]{title_input.getText().toString()});
+
 
         Intent changedInfo = new Intent("changedInfo");
 
@@ -113,20 +117,31 @@ public class AddActivity extends AppCompatActivity {
         changedInfo.putExtra("taskDescription",data_input.getText().toString());
         changedInfo.putExtra("taskDate",dateField.getText().toString());
 
-        //edit Code
-        if(add_button.getText().toString().equals("Save changes"))
+
+        if(data.getCount() >= 1)
         {
-           myDB.updateTask(taskName,title_input.getText().toString(),data_input.getText().toString(),dateField.getText().toString()
-                  ,whichActivity,priorityChoice,"going");
-            changedInfo.putExtra("edited", true);
-        }
-        //Add code
-        else {
-            changedInfo.putExtra("edited", false);
-            myDB.addTask(title_input.getText().toString().trim(), data_input.getText().toString().trim(),
-                    dateField.getText().toString().trim(), whichActivity, priorityChoice, "going");
+            Toast.makeText(this,"You can't put existing taskName !",Toast.LENGTH_LONG).show();
 
         }
+        else
+        {
+            //edit Code
+            if(add_button.getText().toString().equals("Save changes"))
+            {
+                myDB.updateTask(taskName,title_input.getText().toString(),data_input.getText().toString(),dateField.getText().toString()
+                        ,whichActivity,priorityChoice,"going");
+                changedInfo.putExtra("edited", true);
+            }
+            //Add code
+            else {
+
+                changedInfo.putExtra("edited", false);
+                myDB.addTask(title_input.getText().toString().trim(), data_input.getText().toString().trim(),
+                        dateField.getText().toString().trim(), whichActivity, priorityChoice, "going");
+
+            }
+        }
+
 
 
 

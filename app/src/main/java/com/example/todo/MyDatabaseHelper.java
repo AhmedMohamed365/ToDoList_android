@@ -112,7 +112,10 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
 
         if(cursor.getCount() >0)
         {
-            long result = db.delete(TABLE_NAME, "task_title = ?" , new String[]{title});
+            long result =-1;
+
+
+                 result = db.delete(TABLE_NAME, "task_title = ?" , new String[]{title});
             if(result == -1){
                 Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
             }else {
