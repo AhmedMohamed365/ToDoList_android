@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button button4;
     Button button5;
     Button button6;
+    Button rateBt;
     static String whichActivity = "main";
     static  String tempWhich = "main";
     static boolean shwoDone = false;
@@ -41,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textView2);
         textView.setText(currentdate);
 
+
+
+        rateBt = findViewById(R.id.rateBt);
+        rateBt.setOnClickListener(view -> {
+            Intent intent  = new Intent(getBaseContext(), ratingActivity.class );
+           // whichActivity  = "work";
+            startActivity(intent);
+
+        });
         button1 =findViewById(R.id.button);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
