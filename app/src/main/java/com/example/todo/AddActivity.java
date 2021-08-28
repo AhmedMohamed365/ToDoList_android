@@ -50,6 +50,7 @@ public class AddActivity extends AppCompatActivity {
         data_input = findViewById(R.id.taskData);
         dateField= (TextView) findViewById(R.id.DatePicker);
         add_button = findViewById(R.id.addingTaskBtn);
+        add_button.setEnabled(false);
         if(taskName != null || description != null)
         {
             title_input.setText(taskName);
@@ -94,6 +95,19 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
+            //Ensure somthing is in task_Name
+        title_input.setOnFocusChangeListener((view, b) -> {
+            if(title_input.getText().toString().equals(""))
+            {
+                add_button.setEnabled(false);
+
+            }
+            else
+            {
+                add_button.setEnabled(true);
+            }
+        });
+
 
     }
 
@@ -106,6 +120,14 @@ public class AddActivity extends AppCompatActivity {
 
     public void handleAddTaskBt(View view)
     {
+
+
+        if(title_input.getText().toString().equals(""))
+        {
+            Toast.makeText(this,"You can't leave Task Name empty !",Toast.LENGTH_SHORT).show();
+            add_button.setEnabled(false);
+            return;
+        }
         MyDatabaseHelper myDB = new MyDatabaseHelper(this);
         SQLiteDatabase db = myDB.getReadableDatabase();
         Cursor data = db.rawQuery("select * from mytask where task_title = ?" ,new String[]{title_input.getText().toString()});
