@@ -57,7 +57,8 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
             });
             done.setOnClickListener(view -> {
 
-
+                edit.setEnabled(false);
+                done.setEnabled(false);
                 itemView.setBackgroundColor(Color.GREEN);
                 order = 0;
                 Intent intent = new Intent("cardOrder");

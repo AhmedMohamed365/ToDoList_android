@@ -1,7 +1,19 @@
 package com.example.todo;
-import static com.example.todo.MainActivity.shwoDone;
-import static com.example.todo.MainActivity.whichActivity;
-import  com.example.todo.MainActivity.*;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.database.Cursor;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,28 +21,10 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Debug;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Objects;
+
+import static com.example.todo.MainActivity.shwoDone;
+import static com.example.todo.MainActivity.whichActivity;
 
 public class work extends AppCompatActivity {
 
@@ -172,20 +166,20 @@ public class work extends AppCompatActivity {
                     {
                         //Delete code
                         myDB.deleteTask(selected_taskName);
-                        loadData();
+                        //loadData();
                         //update the recycle view after deletion
-//                        tasks.remove(CardPosition);
-//                        recyclerView.removeViewAt(CardPosition);
-//                        adapter.notifyItemRemoved(CardPosition);
-//                        adapter.notifyItemRangeChanged(CardPosition, tasks.size());
+                        tasks.remove(CardPosition);
+                        recyclerView.removeViewAt(CardPosition);
+                        adapter.notifyItemRemoved(CardPosition);
+                        adapter.notifyItemRangeChanged(CardPosition, tasks.size());
                     }
 
                     else if(order == 0)
                     {
                         // Done code
                         myDB.updateTask(selected_taskName,selected_taskName,selected_taskDescription,selected_date,whichActivity,"ordinary","Done");
-                       // adapter.notifyDataSetChanged();
-                        loadData();
+                        adapter.notifyItemChanged(CardPosition);
+                       // loadData();
                      //   tasks.re
                     }
                     else if (order == 1)
@@ -282,8 +276,9 @@ public class work extends AppCompatActivity {
 
                 }
 
-                adapter.notifyDataSetChanged();
             }
+
+            adapter.notifyDataSetChanged();
 
 //            for(int i = 0; i<tasks.size();i++)
 //            {
