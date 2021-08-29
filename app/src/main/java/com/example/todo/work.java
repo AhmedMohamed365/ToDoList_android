@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class work extends AppCompatActivity {
 
@@ -55,6 +56,18 @@ public class work extends AppCompatActivity {
         myDB = new MyDatabaseHelper(this);
         TextView workLabel  = findViewById(R.id.label);
 
+
+        RecyclerView.LayoutManager layoutManager;
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        tasks = new LinkedList<>();
+        //Recycle
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new ViewHandler(tasks);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+
         Button addTaskBt = findViewById(R.id.addBtn);
         addTaskBt.setOnClickListener(view -> {
             Intent intent = new Intent(getBaseContext(), AddActivity.class);
@@ -68,7 +81,7 @@ public class work extends AppCompatActivity {
                 } else {
                     shwoDone = false;
                 }
-
+                tasks.clear();
                 loadData();
             }
         });
@@ -96,6 +109,10 @@ public class work extends AppCompatActivity {
 
 
     }
+
+
+
+
     public BroadcastReceiver changesReciver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -111,14 +128,14 @@ public class work extends AppCompatActivity {
                 {
                     // ahmed edit mkn el deadline hena :)
                     // 7t variable 3la 7sb el function
-                    tasks.set( CardPosition, new taskshow(taskName,taskDescription,taskDate ,done,edit,delete));
+                    tasks.set( CardPosition, new taskshow(taskName,taskDescription,taskDate ,done,edit,delete,false));
                     adapter.notifyItemChanged(CardPosition);
                 }
 
                 else
                 {
                     // we hena kman :)
-                    tasks.add(  new taskshow(taskName,taskDescription,taskDate ,done,edit,delete));
+                    tasks.add(  new taskshow(taskName,taskDescription,taskDate ,done,edit,delete,false));
 
                     loadData();
                     //adapter.notifyDataSetChanged();
@@ -224,7 +241,7 @@ public class work extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        tasks.clear();
         loadData();
     }
 
@@ -232,43 +249,51 @@ public class work extends AppCompatActivity {
     {
 
 
-        RecyclerView.LayoutManager layoutManager;
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        tasks = new LinkedList<>();
+
         //variable to set Done Cards to green
         View card;
         Cursor data = myDB.getListContents();
         if (data.getCount() == 0) {
-            layoutManager = new LinearLayoutManager(this);
-            adapter = new ViewHandler(tasks);
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.setAdapter(adapter);
+
         } else {
             while (data.moveToNext()) {
                 if (data.getString(3).equals(whichActivity)) {
 
                     if(shwoDone && data.getString(6).equals("Done"))
                     {
-                        tasks.add(new taskshow(data.getString(1),data.getString(2),data.getString(4) ,done,edit,delete));
+                        tasks.add(new taskshow(data.getString(1),data.getString(2),data.getString(4) ,done,edit,delete,true));
 
 
                     }
                     else if (shwoDone == false &&  data.getString(6).equals("going"))
                     {
-                        tasks.add(new taskshow(data.getString(1),data.getString(2),data.getString(4) ,done,edit,delete));
+                        tasks.add(new taskshow(data.getString(1),data.getString(2),data.getString(4) ,done,edit,delete,false));
                     }
 
 
 // Implement a way to color Done cards in the begining
 
-                    layoutManager = new LinearLayoutManager(this);
-                    adapter = new ViewHandler(tasks);
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(adapter);
+//                    layoutManager = new LinearLayoutManager(this);
+//                    adapter = new ViewHandler(tasks);
+//                    recyclerView.setLayoutManager(layoutManager);
+//                    recyclerView.setAdapter(adapter);
+
+
 
                 }
+
+                adapter.notifyDataSetChanged();
             }
+
+//            for(int i = 0; i<tasks.size();i++)
+//            {
+//                if(tasks.get(i).getStatus())
+//                {
+//                    Objects.requireNonNull(recyclerView.findViewHolderForAdapterPosition(i)).itemView.setBackgroundColor(Color.GREEN);
+//                }
+//            }
         }
     }
+
+
 }

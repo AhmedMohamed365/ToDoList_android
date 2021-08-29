@@ -19,12 +19,14 @@ import static com.example.todo.MainActivity.shwoDone;
 
 public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOLDER> {
     private LinkedList<taskshow> tasks ;
+    private boolean status = false;
     public static class EXAMPLEVIEWHOLDER extends RecyclerView.ViewHolder
     {
         ImageView edit,done,delete ;
         TextView name,data,deadline;
         RelativeLayout relativeLayout;
         int order = -1;
+
 
         public EXAMPLEVIEWHOLDER(@NonNull View itemView) {
             super(itemView);
@@ -93,10 +95,10 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
     public EXAMPLEVIEWHOLDER onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewlistcontents_layout,parent,false);
 
-//        if(true)
-//        {
-//            v.setBackgroundColor(Color.GREEN);
-//        }
+        if(status)
+        {
+            v.setBackgroundColor(Color.GREEN);
+        }
         EXAMPLEVIEWHOLDER evh = new EXAMPLEVIEWHOLDER(v);
 
         return evh ;
@@ -112,6 +114,8 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         holder.name.setText(currentItem.getName());
         holder.data.setText(currentItem.getData());
         holder.deadline.setText(currentItem.getDeadline());
+        status = currentItem.getStatus();
+
 
     }
     @Override

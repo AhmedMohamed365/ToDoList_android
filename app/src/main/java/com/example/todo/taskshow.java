@@ -7,7 +7,10 @@ public class taskshow {
     private int donePic ;
     private int deletePic ;
     private int editPic ;
-    public taskshow (String name ,String data,String deadline,int donePic ,int editPic ,int deletePic )
+    private boolean status = false;
+
+
+    public taskshow (String name ,String data,String deadline,int donePic ,int editPic ,int deletePic,boolean status )
     {
         this.name = name;
         this.data=data;
@@ -15,8 +18,12 @@ public class taskshow {
         this.deletePic  =deletePic;
         this.donePic = donePic ;
         this.editPic = editPic ;
+        this.status = status;
     }
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
     public void setName(String name) {
         this.name = name;
     }
@@ -41,6 +48,9 @@ public class taskshow {
         this.editPic = editPic;
     }
 
+    public boolean getStatus() {
+        return status;
+    }
     public String getName() {
         return name;
     }
