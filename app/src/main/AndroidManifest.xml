@@ -12,9 +12,6 @@
 
 
         <activity
-            android:name=".ratingActivity"
-            android:exported="true" />
-        <activity
             android:name=".AddActivity"
             android:exported="true" />
         <activity

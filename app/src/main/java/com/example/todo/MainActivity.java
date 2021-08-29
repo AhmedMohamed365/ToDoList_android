@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +12,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,13 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        rateBt = findViewById(R.id.rateBt);
-        rateBt.setOnClickListener(view -> {
-            Intent intent  = new Intent(getBaseContext(), ratingActivity.class );
-           // whichActivity  = "work";
-            startActivity(intent);
 
-        });
         button1 =findViewById(R.id.button);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
