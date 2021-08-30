@@ -130,9 +130,10 @@ public class work extends AppCompatActivity {
                 {
                     // we hena kman :)
                     tasks.add(  new taskshow(taskName,taskDescription,taskDate ,done,edit,delete,false));
-
-                    loadData();
                     //adapter.notifyDataSetChanged();
+                    //
+                   // loadData();
+
                 }
 
 
