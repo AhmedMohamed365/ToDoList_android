@@ -120,16 +120,16 @@ public class work extends AppCompatActivity {
             {
                 if( edited)
                 {
-                    // ahmed edit mkn el deadline hena :)
-                    // 7t variable 3la 7sb el function
+                   // Edit existing Task
                     tasks.set( CardPosition, new taskshow(taskName,taskDescription,taskDate ,done,edit,delete,false));
                     adapter.notifyItemChanged(CardPosition);
                 }
 
                 else
                 {
-                    // we hena kman :)
+                        //Add Task
                     tasks.add(  new taskshow(taskName,taskDescription,taskDate ,done,edit,delete,false));
+                    adapter.notifyItemInserted(tasks.size() - 1);
                     //adapter.notifyDataSetChanged();
                     //
                    // loadData();
