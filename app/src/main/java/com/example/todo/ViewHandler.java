@@ -40,13 +40,13 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
             deadline = itemView.findViewById(R.id.deadLine);
             relativeLayout = itemView.findViewById(R.id.relative);
 
-            if(shwoDone)
-            {
-                edit.setEnabled(false);
-                done.setEnabled(false);
-                Log.d("done","true");
-
-            }
+//            if(shwoDone)
+//            {
+//                edit.setEnabled(false);
+//                done.setEnabled(false);
+//                Log.d("done","true");
+//
+//            }
 
 
             edit.setOnClickListener(view -> {
@@ -97,9 +97,13 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
     public EXAMPLEVIEWHOLDER onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewlistcontents_layout,parent,false);
 
-//       if(status)
+//       if(shwoDone)
 //       {
 //           v.setBackgroundColor(Color.GREEN);
+//       }
+//       else
+//       {
+//           v.setBackgroundColor(Color.RED);
 //       }
 
 
@@ -121,9 +125,17 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         status = currentItem.getStatus();
         if(status)
         {
+
             holder.itemView.setBackgroundColor(Color.GREEN);
             holder.done.setEnabled(false);
             holder.edit.setEnabled(false);
+        }
+        else
+        {
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+
+            holder.done.setEnabled(true);
+            holder.edit.setEnabled(true);
         }
 
 
