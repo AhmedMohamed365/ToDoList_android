@@ -141,21 +141,21 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         }
         else
         {
-            //under exoeriments
-            Rect bounds  = holder.relativeLayout.getBackground().getBounds();
+//            //under exoeriments
+//            Rect bounds  = holder.relativeLayout.getBackground().getBounds();
+////
+//           holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left+10,bounds.top+10,bounds.right-offset,bounds.bottom+10) );
+//           offset+= 50;
 //
-           holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left+10,bounds.top+10,bounds.right-offset,bounds.bottom+10) );
-           offset+= 50;
-
-            Animation anim = new AlphaAnimation(1.0f,0.0f);
-            AnimationDrawable animationDrawable = (AnimationDrawable) holder.relativeLayout.getBackground();
-            animationDrawable.setEnterFadeDuration(2000);
-           // animationDrawable.set
-            animationDrawable.setExitFadeDuration(3000);
-           // animationDrawable.setOneShot(true);
-            animationDrawable.setBounds(new Rect( bounds.left+10,bounds.top+10,bounds.right-offset,bounds.bottom+10));
-         //   animationDrawable.
-            animationDrawable.start();
+//            Animation anim = new AlphaAnimation(1.0f,0.0f);
+//            AnimationDrawable animationDrawable = (AnimationDrawable) holder.relativeLayout.getBackground();
+//            animationDrawable.setEnterFadeDuration(2000);
+//           // animationDrawable.set
+//            animationDrawable.setExitFadeDuration(3000);
+//           // animationDrawable.setOneShot(true);
+//            animationDrawable.setBounds(new Rect( bounds.left+10,bounds.top+10,bounds.right-offset,bounds.bottom+10));
+//         //   animationDrawable.
+//            animationDrawable.start();
 
 
            // AnimationDrawable animation = (AnimationDrawable)  holder.relativeLayout.getBackground();
@@ -163,7 +163,9 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
 //            animationDrawable.setEnterFadeDuration(2000);
 //            animationDrawable.setExitFadeDuration(3000);
 //            animationDrawable.start();
-            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+           // holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+
+            crossfade(holder);
 
             holder.done.setEnabled(true);
             holder.edit.setEnabled(true);
@@ -179,6 +181,28 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
     @Override
     public int getItemCount() {
         return tasks.size();
+    }
+
+
+    private void crossfade(@NonNull EXAMPLEVIEWHOLDER holder) {
+
+        // Set the content view to 0% opacity but visible, so that it is visible
+        // (but fully transparent) during the animation.
+        Rect bounds  = holder.relativeLayout.getBackground().getBounds();
+        holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left+10,bounds.top+10,bounds.right-offset,bounds.bottom+10) );
+        holder.relativeLayout.setVisibility(View.VISIBLE);
+
+        // Animate the content view to 100% opacity, and clear any animation
+        // listener set on the view.
+        holder.relativeLayout.animate()
+                .alpha(1f)
+                .setDuration(500)
+                .setListener(null);
+
+        // Animate the loading view to 0% opacity. After the animation ends,
+        // set its visibility to GONE as an optimization step (it won't
+        // participate in layout passes, etc.)
+
     }
 }
 

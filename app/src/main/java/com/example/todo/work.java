@@ -37,7 +37,7 @@ public class work extends AppCompatActivity {
     LinkedList<taskshow> tasks ;
     String selected_taskName,selected_taskDescription , selected_date;
     Switch showDone;
-
+    private int shortAnimationDuration;
     //holder for selected card postion
     int CardPosition;
     int done,edit,delete;
@@ -64,6 +64,11 @@ public class work extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
+        //Aniamtion section
+        shortAnimationDuration = getResources().getInteger(
+                android.R.integer.config_shortAnimTime);
+
+
         Button addTaskBt = findViewById(R.id.addBtn);
         addTaskBt.setOnClickListener(view -> {
             Intent intent = new Intent(getBaseContext(), AddActivity.class);
@@ -78,6 +83,7 @@ public class work extends AppCompatActivity {
                 } else {
                     shwoDone = false;
                     addTaskBt.setEnabled(true);
+                  //  shortAnimationDuration =
                 }
 
                 tasks.clear();
@@ -316,5 +322,24 @@ public class work extends AppCompatActivity {
         }
     }
 
+    private void crossfade() {
 
+        // Set the content view to 0% opacity but visible, so that it is visible
+        // (but fully transparent) during the animation.
+       View view =  recyclerView.findViewHolderForAdapterPosition(CardPosition).itemView;
+       view.setAlpha(0f);
+        view.setVisibility(View.VISIBLE);
+
+        // Animate the content view to 100% opacity, and clear any animation
+        // listener set on the view.
+        view.animate()
+                .alpha(1f)
+                .setDuration(shortAnimationDuration)
+                .setListener(null);
+
+        // Animate the loading view to 0% opacity. After the animation ends,
+        // set its visibility to GONE as an optimization step (it won't
+        // participate in layout passes, etc.)
+
+    }
 }
