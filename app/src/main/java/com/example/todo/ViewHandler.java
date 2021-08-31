@@ -1,6 +1,8 @@
 package com.example.todo;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import static com.example.todo.MainActivity.shwoDone;
 public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOLDER> {
     private LinkedList<taskshow> tasks ;
     private boolean status = false;
+    int offset = 50;
     public static class EXAMPLEVIEWHOLDER extends RecyclerView.ViewHolder
     {
         ImageView edit,done,delete ;
@@ -129,9 +132,15 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
             holder.itemView.setBackgroundColor(Color.GREEN);
             holder.done.setEnabled(false);
             holder.edit.setEnabled(false);
+
         }
         else
         {
+            //under exoeriments
+            Rect bounds  = holder.relativeLayout.getBackground().getBounds();
+
+           holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left+10,bounds.top+10,bounds.right-offset,bounds.bottom+10) );
+           offset+= 50;
             holder.itemView.setBackgroundColor(Color.TRANSPARENT);
 
             holder.done.setEnabled(true);
