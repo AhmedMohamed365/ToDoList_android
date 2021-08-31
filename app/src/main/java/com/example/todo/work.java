@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -136,8 +137,11 @@ public class work extends AppCompatActivity {
                     tasks.add(  new taskshow(taskName,taskDescription,taskDate ,done,edit,delete,false));
                     if(tasks.size() !=0)
                     adapter.notifyItemInserted(tasks.size() - 1);
+//Animation section
 
-                  //  adapter.notifyDataSetChanged();
+
+           // animationDrawable.setOneShot(true);
+                    adapter.notifyDataSetChanged();
                     //
                    // loadData();
 

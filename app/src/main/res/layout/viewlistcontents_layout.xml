@@ -14,7 +14,8 @@
         android:id="@+id/relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/card_gradient"
+        android:background="@drawable/transition_drawable"
+
                                             >
 
         <TextView

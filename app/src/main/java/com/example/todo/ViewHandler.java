@@ -2,7 +2,9 @@ package com.example.todo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +27,12 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
     private LinkedList<taskshow> tasks ;
     private boolean status = false;
     int offset = 50;
+
     public static class EXAMPLEVIEWHOLDER extends RecyclerView.ViewHolder
     {
         ImageView edit,done,delete ;
         TextView name,data,deadline;
-        RelativeLayout relativeLayout;
+         public RelativeLayout relativeLayout;
         int order = -1;
 
 
@@ -138,9 +141,25 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         {
             //under exoeriments
             Rect bounds  = holder.relativeLayout.getBackground().getBounds();
-
+//
            holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left+10,bounds.top+10,bounds.right-offset,bounds.bottom+10) );
            offset+= 50;
+
+
+            AnimationDrawable animationDrawable = (AnimationDrawable) holder.relativeLayout.getBackground();
+            animationDrawable.setEnterFadeDuration(2000);
+            animationDrawable.setExitFadeDuration(3000);
+           // animationDrawable.setOneShot(true);
+            animationDrawable.setBounds(new Rect( bounds.left+10,bounds.top+10,bounds.right-offset,bounds.bottom+10));
+
+            animationDrawable.start();
+
+
+           // AnimationDrawable animation = (AnimationDrawable)  holder.relativeLayout.getBackground();
+
+//            animationDrawable.setEnterFadeDuration(2000);
+//            animationDrawable.setExitFadeDuration(3000);
+//            animationDrawable.start();
             holder.itemView.setBackgroundColor(Color.TRANSPARENT);
 
             holder.done.setEnabled(true);
