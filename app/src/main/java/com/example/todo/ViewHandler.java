@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -145,13 +147,14 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
            holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left+10,bounds.top+10,bounds.right-offset,bounds.bottom+10) );
            offset+= 50;
 
-
+            Animation anim = new AlphaAnimation(1.0f,0.0f);
             AnimationDrawable animationDrawable = (AnimationDrawable) holder.relativeLayout.getBackground();
             animationDrawable.setEnterFadeDuration(2000);
+           // animationDrawable.set
             animationDrawable.setExitFadeDuration(3000);
            // animationDrawable.setOneShot(true);
             animationDrawable.setBounds(new Rect( bounds.left+10,bounds.top+10,bounds.right-offset,bounds.bottom+10));
-
+         //   animationDrawable.
             animationDrawable.start();
 
 

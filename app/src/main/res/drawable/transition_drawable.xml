@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- The drawables used here can be solid colors, gradients, shapes, images, etc. -->
+
     <item android:drawable="@drawable/card_gradient"
         android:duration="1000"
         />
