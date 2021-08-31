@@ -1,12 +1,14 @@
 package com.example.todo;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -42,8 +44,11 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
             {
                 edit.setEnabled(false);
                 done.setEnabled(false);
+                Log.d("done","true");
 
             }
+
+
             edit.setOnClickListener(view -> {
                 order = 1;
                 Intent intent = new Intent("cardOrder");
@@ -85,21 +90,19 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         tasks = examplist ;
     }
 
-//    @Override
-//    public int getItemViewType(int position) {
-//
-//       //implement for later
-//    }
+
 
     @NonNull
     @Override
     public EXAMPLEVIEWHOLDER onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewlistcontents_layout,parent,false);
 
-        if(status)
-        {
-            v.setBackgroundColor(Color.GREEN);
-        }
+//       if(status)
+//       {
+//           v.setBackgroundColor(Color.GREEN);
+//       }
+
+
         EXAMPLEVIEWHOLDER evh = new EXAMPLEVIEWHOLDER(v);
 
         return evh ;
@@ -116,9 +119,20 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         holder.data.setText(currentItem.getData());
         holder.deadline.setText(currentItem.getDeadline());
         status = currentItem.getStatus();
+        if(status)
+        {
+            holder.itemView.setBackgroundColor(Color.GREEN);
+            holder.done.setEnabled(false);
+            holder.edit.setEnabled(false);
+        }
 
 
     }
+
+
+
+
+
     @Override
     public int getItemCount() {
         return tasks.size();

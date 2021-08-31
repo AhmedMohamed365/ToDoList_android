@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -72,10 +73,14 @@ public class work extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     shwoDone = true;
+                    addTaskBt.setEnabled(false);
                 } else {
                     shwoDone = false;
+                    addTaskBt.setEnabled(true);
                 }
+
                 tasks.clear();
+               // adapter.notifyDataSetChanged();
                 loadData();
             }
         });
@@ -129,8 +134,10 @@ public class work extends AppCompatActivity {
                 {
                         //Add Task
                     tasks.add(  new taskshow(taskName,taskDescription,taskDate ,done,edit,delete,false));
+                    if(tasks.size() !=0)
                     adapter.notifyItemInserted(tasks.size() - 1);
-                    //adapter.notifyDataSetChanged();
+
+                  //  adapter.notifyDataSetChanged();
                     //
                    // loadData();
 
@@ -161,7 +168,7 @@ public class work extends AppCompatActivity {
             {
                 Cursor data = myDB.getListContents();
 
-                if(data.getCount() >= 0)
+                if(data.getCount() > 0)
                 {
                     if(order == 2)
                     {
@@ -169,17 +176,27 @@ public class work extends AppCompatActivity {
                         myDB.deleteTask(selected_taskName);
                         //loadData();
                         //update the recycle view after deletion
-                        tasks.remove(CardPosition);
-                        recyclerView.removeViewAt(CardPosition);
-                        adapter.notifyItemRemoved(CardPosition);
-                        adapter.notifyItemRangeChanged(CardPosition, tasks.size());
+
+                        try {
+                            tasks.remove(CardPosition);
+                            recyclerView.removeViewAt(CardPosition);
+                            adapter.notifyItemRemoved(CardPosition);
+                            adapter.notifyItemRangeChanged(CardPosition, tasks.size());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                     }
 
                     else if(order == 0)
                     {
                         // Done code
                         myDB.updateTask(selected_taskName,selected_taskName,selected_taskDescription,selected_date,whichActivity,"ordinary","Done");
-                        adapter.notifyItemChanged(CardPosition);
+                       // tasks.set(CardPosition,new taskshow(selected_taskName,selected_taskDescription,selected_date,done,edit,delete,true));
+                        //adapter.notifyItemChanged(CardPosition);
+                       // adapter.notifyItemChanged(CardPosition);
+
+                       // recyclerView.findViewHolderForAdapterPosition(CardPosition).itemView.setBackgroundColor(Color.GREEN);
                        // loadData();
                      //   tasks.re
                     }
@@ -248,6 +265,7 @@ public class work extends AppCompatActivity {
         //variable to set Done Cards to green
         View card;
         Cursor data = myDB.getListContents();
+        int i = 0;
         if (data.getCount() == 0) {
 
         } else {
@@ -258,11 +276,12 @@ public class work extends AppCompatActivity {
                     {
                         tasks.add(new taskshow(data.getString(1),data.getString(2),data.getString(4) ,done,edit,delete,true));
 
-
+                        i++;
                     }
                     else if (shwoDone == false &&  data.getString(6).equals("going"))
                     {
                         tasks.add(new taskshow(data.getString(1),data.getString(2),data.getString(4) ,done,edit,delete,false));
+                        i++;
                     }
 
 
@@ -275,11 +294,13 @@ public class work extends AppCompatActivity {
 
 
 
+
                 }
 
             }
 
             adapter.notifyDataSetChanged();
+
 
 //            for(int i = 0; i<tasks.size();i++)
 //            {
