@@ -1,4 +1,7 @@
 package com.example.todo;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -163,7 +166,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
 //            animationDrawable.setEnterFadeDuration(2000);
 //            animationDrawable.setExitFadeDuration(3000);
 //            animationDrawable.start();
-           // holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
 
             crossfade(holder);
 
@@ -190,14 +193,22 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         // (but fully transparent) during the animation.
         Rect bounds  = holder.relativeLayout.getBackground().getBounds();
         holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left+10,bounds.top+10,bounds.right-offset,bounds.bottom+10) );
-        holder.relativeLayout.setVisibility(View.VISIBLE);
+      //  holder.relativeLayout.setVisibility(View.VISIBLE);
 
         // Animate the content view to 100% opacity, and clear any animation
         // listener set on the view.
         holder.relativeLayout.animate()
-                .alpha(1f)
+
                 .setDuration(500)
-                .setListener(null);
+                .setUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                        holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left,bounds.top,bounds.right-offset,bounds.bottom) );
+                        Log.d("update","updates");
+                    }
+
+
+                });
 
         // Animate the loading view to 0% opacity. After the animation ends,
         // set its visibility to GONE as an optimization step (it won't
