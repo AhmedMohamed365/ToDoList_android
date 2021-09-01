@@ -147,6 +147,8 @@ public class AddActivity extends AppCompatActivity {
             Toast.makeText(this,"You can't put existing taskName !",Toast.LENGTH_LONG).show();
 
         }
+
+        //Edit Task doesn't work when trying to change task description
         else
         {
             //edit Code
