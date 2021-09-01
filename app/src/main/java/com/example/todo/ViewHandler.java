@@ -1,6 +1,7 @@
 package com.example.todo;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Color;
@@ -32,7 +33,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
     private LinkedList<taskshow> tasks ;
     private boolean status = false;
     int offset = 50;
-
+    int duration;
     public static class EXAMPLEVIEWHOLDER extends RecyclerView.ViewHolder
     {
         ImageView edit,done,delete ;
@@ -134,6 +135,8 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         holder.data.setText(currentItem.getData());
         holder.deadline.setText(currentItem.getDeadline());
         status = currentItem.getStatus();
+
+         duration = 10000 * (position+1);
         if(status)
         {
 
@@ -192,23 +195,40 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         // Set the content view to 0% opacity but visible, so that it is visible
         // (but fully transparent) during the animation.
         Rect bounds  = holder.relativeLayout.getBackground().getBounds();
-        holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left+10,bounds.top+10,bounds.right-offset,bounds.bottom+10) );
+       // holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left+10,bounds.top+10,bounds.right-offset,bounds.bottom+10) );
       //  holder.relativeLayout.setVisibility(View.VISIBLE);
 
         // Animate the content view to 100% opacity, and clear any animation
         // listener set on the view.
-        holder.relativeLayout.animate()
+//        holder.relativeLayout.animate()
+//
+//                .setDuration(500)
+//                .setUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                    @Override
+//                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
+//                        holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left,bounds.top,bounds.right-offset,bounds.bottom) );
+//                        Log.d("update","updates");
+//                    }
+//
+//
+//                });
 
-                .setDuration(500)
-                .setUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                        holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left,bounds.top,bounds.right-offset,bounds.bottom) );
-                        Log.d("update","updates");
-                    }
+
+        ValueAnimator animation = ValueAnimator.ofInt(0, -500);
+        animation.setDuration(duration);
+        animation.start();
+        animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator updatedAnimation) {
+                // You can use the animated value in a property that uses the
+                // same type as the animation. In this case, you can use the
+                // float value in the translationX property.
+                int animatedValue = (int)updatedAnimation.getAnimatedValue();
+                holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left,bounds.top,bounds.right+animatedValue,bounds.bottom) );
+            }
 
 
-                });
+        });
 
         // Animate the loading view to 0% opacity. After the animation ends,
         // set its visibility to GONE as an optimization step (it won't
