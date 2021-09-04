@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.icu.text.DecimalFormat;
+import android.icu.text.NumberFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +26,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 
 import static com.example.todo.MainActivity.shwoDone;
@@ -284,7 +288,7 @@ public class work extends AppCompatActivity {
 
                     if(shwoDone && data.getString(6).equals("Done"))
                     {
-                        tasks.add(new taskshow(data.getString(1),data.getString(2),data.getString(4) ,done,edit,delete,true));
+                        tasks.add(new taskshow(data.getString(1),data.getString(2),getLeftTime("2021-09-04 24:00:00") ,done,edit,delete,true));
 
                         i++;
                     }
@@ -322,24 +326,50 @@ public class work extends AppCompatActivity {
         }
     }
 
-    private void crossfade() {
 
-        // Set the content view to 0% opacity but visible, so that it is visible
-        // (but fully transparent) during the animation.
-       View view =  recyclerView.findViewHolderForAdapterPosition(CardPosition).itemView;
-       view.setAlpha(0f);
-        view.setVisibility(View.VISIBLE);
 
-        // Animate the content view to 100% opacity, and clear any animation
-        // listener set on the view.
-        view.animate()
-                .alpha(1f)
-                .setDuration(shortAnimationDuration)
-                .setListener(null);
 
-        // Animate the loading view to 0% opacity. After the animation ends,
-        // set its visibility to GONE as an optimization step (it won't
-        // participate in layout passes, etc.)
+ public String getLeftTime(String date)
+ {
+    SQLiteDatabase db =  myDB.getReadableDatabase();
+ // Cursor data =   db.rawQuery("select JULIANDAY('?') - JULIANDAY('now') ",new String[] {date});
 
-    }
+     int days  =0;
+    Cursor data =  db.rawQuery("select  JULIANDAY(?) -JULIANDAY(datetime(datetime('now'), 'localtime') )  ",new String[]{date});
+     data.moveToNext();
+
+   //days =
+     //double doubleNumber = 24.04;
+     double  doubleAsString = data.getDouble(0);
+
+     if(doubleAsString < 0)
+     {
+         return "overDue";
+     }
+     days  = (int) doubleAsString;
+     double hours = (doubleAsString - days) * 24;
+
+
+
+
+//     days =  (int)data.getLong(0);
+//     hours = (data.getLong(0) - days) * 60  ;
+//     minutes = (int) (hours - (int) hours);
+
+    //Format to one place only
+     NumberFormat formatter = new DecimalFormat("#0.0");
+     hours = Double.parseDouble(formatter.format(hours));
+
+
+
+  return (days !=0) ? days+"days" +  hours + "hours" :  hours + "hours" ;
+ }
+
+
+
+
 }
+
+
+
+

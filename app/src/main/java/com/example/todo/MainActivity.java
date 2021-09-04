@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Calendar calendar = Calendar.getInstance();
-        String currentdate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+     //   String currentdate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+        String currentdate = DateFormat.getTimeInstance(DateFormat.LONG).format(calendar.getTime());
         TextView textView = findViewById(R.id.textView2);
         textView.setText(currentdate);
 

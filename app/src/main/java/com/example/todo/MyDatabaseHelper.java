@@ -146,4 +146,10 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
+
+    public String getRemainingDays()
+    {
+        return "Wait man";
+    }
+
 }

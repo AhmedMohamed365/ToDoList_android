@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -33,6 +34,13 @@ public class AddActivity extends AppCompatActivity {
     TextView   dateField;
     Button add_button;
     String priorityChoice = "ordinary";
+   /*
+    To Be used later :)
+    enum priority  {ordinary , important , urgent};
+
+
+
+    */
     String taskName,description,date;
 
     Button []priorityBts;
@@ -148,7 +156,7 @@ public class AddActivity extends AppCompatActivity {
 
         }
 
-        //Edit Task doesn't work when trying to change task description
+        //Edit Task doesn't work when trying to change task description only
         else
         {
             //edit Code
