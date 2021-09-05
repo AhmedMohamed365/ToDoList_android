@@ -361,7 +361,7 @@ public class work extends AppCompatActivity {
 
 
 
-  return (days !=0) ? days+"days" +  hours + "hours" :  hours + "hours" ;
+     return (days !=0) ? days+"days" +  hours + "hours" :  /*OR hours only */  hours + "hours" ;
  }
 
 

@@ -4,6 +4,7 @@ import static com.example.todo.MainActivity.tempWhich;
 import static com.example.todo.MainActivity.whichActivity;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -34,6 +36,8 @@ public class AddActivity extends AppCompatActivity {
     TextView   dateField;
     Button add_button;
     String priorityChoice = "ordinary";
+
+    String pickedTime;
    /*
     To Be used later :)
     enum priority  {ordinary , important , urgent};
@@ -41,6 +45,9 @@ public class AddActivity extends AppCompatActivity {
 
 
     */
+
+
+    int  hour , minute;
     String taskName,description,date;
 
     Button []priorityBts;
@@ -162,7 +169,7 @@ public class AddActivity extends AppCompatActivity {
             //edit Code
             if(add_button.getText().toString().equals("Save changes"))
             {
-                myDB.updateTask(taskName,title_input.getText().toString(),data_input.getText().toString(),dateField.getText().toString()
+                myDB.updateTask(taskName,title_input.getText().toString(),data_input.getText().toString(),dateField.getText().toString().trim()+pickedTime
                         ,whichActivity,priorityChoice,"going");
                 changedInfo.putExtra("edited", true);
             }
@@ -171,7 +178,7 @@ public class AddActivity extends AppCompatActivity {
 
                 changedInfo.putExtra("edited", false);
                 myDB.addTask(title_input.getText().toString().trim(), data_input.getText().toString().trim(),
-                        dateField.getText().toString().trim() + " 01:00:00", whichActivity, priorityChoice, "going");
+                        dateField.getText().toString().trim() + pickedTime, whichActivity, priorityChoice, "going");
 
             }
         }
@@ -201,5 +208,37 @@ public class AddActivity extends AppCompatActivity {
         priorityChoice =  selectedBt.getText().toString();
 
         Toast.makeText(this,"You Chosed bt "+priorityChoice,Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void pickTime(View view)
+    {
+
+
+        TextView timeText = (TextView) view;
+
+
+
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener()
+        {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+
+
+                hour = selectedHour;
+                minute = selectedMinute;
+                pickedTime =' '+ String.format(Locale.getDefault(), "%02d:%02d:00",hour, minute);
+                timeText.setText(pickedTime);
+            }
+
+
+        };
+
+        // int style = AlertDialog.THEME_HOLO_DARK;
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, /*style,*/ onTimeSetListener, hour, minute, false);
+
+        timePickerDialog.setTitle("Select Time");
+        timePickerDialog.show();
     }
 }

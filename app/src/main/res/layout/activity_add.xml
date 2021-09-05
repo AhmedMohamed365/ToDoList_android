@@ -67,6 +67,31 @@
         app:layout_constraintVertical_bias="0.955"
         tools:ignore="SpeakableTextPresentCheck" />
 
+    <TextView
+        android:id="@+id/timePicker"
+        android:layout_width="209dp"
+        android:layout_height="58dp"
+
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:drawableRight="@android:drawable/ic_lock_idle_alarm"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="pick an hour"
+        android:minHeight="48dp"
+        android:onClick="pickTime"
+        android:textColorHint="#171414"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/addingTaskBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.445"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DatePicker"
+        app:layout_constraintVertical_bias="0.928"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <Button
         android:id="@+id/addingTaskBtn"
         android:layout_width="wrap_content"

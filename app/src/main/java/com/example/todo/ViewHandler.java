@@ -67,7 +67,8 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
                 intent.putExtra("taskName",name.getText().toString());
                 intent.putExtra("order",order);
                 intent.putExtra("data",data.getText().toString());
-                intent.putExtra("date",deadline.getText().toString());
+                //needs to  fix this bug when Editing
+                intent.putExtra("date","pick a date");
                 intent.putExtra("CardPosition",getAdapterPosition());
                 LocalBroadcastManager.getInstance(delete.getContext()).sendBroadcast(intent);
 
