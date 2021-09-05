@@ -84,7 +84,7 @@ public class AddActivity extends AppCompatActivity {
             }
 
             private void updateLabel() {
-                String myFormat = "dd-MM-yy"; //In which you need put here
+                String myFormat = "YYYY-MM-dd"; //In which you need put here
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
                 dateField.setText(sdf.format(myCalendar.getTime()));
@@ -171,7 +171,7 @@ public class AddActivity extends AppCompatActivity {
 
                 changedInfo.putExtra("edited", false);
                 myDB.addTask(title_input.getText().toString().trim(), data_input.getText().toString().trim(),
-                        dateField.getText().toString().trim(), whichActivity, priorityChoice, "going");
+                        dateField.getText().toString().trim() + " 01:00:00", whichActivity, priorityChoice, "going");
 
             }
         }

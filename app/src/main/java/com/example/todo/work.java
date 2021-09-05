@@ -288,13 +288,13 @@ public class work extends AppCompatActivity {
 
                     if(shwoDone && data.getString(6).equals("Done"))
                     {
-                        tasks.add(new taskshow(data.getString(1),data.getString(2),getLeftTime("2021-09-04 24:00:00") ,done,edit,delete,true));
+                        tasks.add(new taskshow(data.getString(1),data.getString(2),getLeftTime(data.getString(4)) ,done,edit,delete,true));
 
                         i++;
                     }
                     else if (shwoDone == false &&  data.getString(6).equals("going"))
                     {
-                        tasks.add(new taskshow(data.getString(1),data.getString(2),data.getString(4) ,done,edit,delete,false));
+                        tasks.add(new taskshow(data.getString(1),data.getString(2),getLeftTime(data.getString(4)) ,done,edit,delete,false));
                         i++;
                     }
 
@@ -335,11 +335,12 @@ public class work extends AppCompatActivity {
  // Cursor data =   db.rawQuery("select JULIANDAY('?') - JULIANDAY('now') ",new String[] {date});
 
      int days  =0;
+
+     //query to calculate the left time from Now to the time where task should be ended.
     Cursor data =  db.rawQuery("select  JULIANDAY(?) -JULIANDAY(datetime(datetime('now'), 'localtime') )  ",new String[]{date});
      data.moveToNext();
 
-   //days =
-     //double doubleNumber = 24.04;
+
      double  doubleAsString = data.getDouble(0);
 
      if(doubleAsString < 0)
@@ -352,9 +353,7 @@ public class work extends AppCompatActivity {
 
 
 
-//     days =  (int)data.getLong(0);
-//     hours = (data.getLong(0) - days) * 60  ;
-//     minutes = (int) (hours - (int) hours);
+
 
     //Format to one place only
      NumberFormat formatter = new DecimalFormat("#0.0");

@@ -135,8 +135,12 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         holder.data.setText(currentItem.getData());
         holder.deadline.setText(currentItem.getDeadline());
         status = currentItem.getStatus();
+       String deadLine =  currentItem.getDeadline().replaceAll("hours","");
 
-         duration = 10000 * (position+1);
+
+       // Still need to be edited ***!!!!!****
+         duration =  10000 * (position+1);
+        Log.d("deadLine",String.valueOf(duration));
         if(status)
         {
 
@@ -214,7 +218,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
 //                });
 
 
-        ValueAnimator animation = ValueAnimator.ofInt(0, -500);
+        ValueAnimator animation = ValueAnimator.ofInt(0, 500);
         animation.setDuration(duration);
         animation.start();
         animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -224,7 +228,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
                 // same type as the animation. In this case, you can use the
                 // float value in the translationX property.
                 int animatedValue = (int)updatedAnimation.getAnimatedValue();
-                holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left,bounds.top,bounds.right+animatedValue,bounds.bottom) );
+                holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left,bounds.top,bounds.right-animatedValue,bounds.bottom) );
             }
 
 
