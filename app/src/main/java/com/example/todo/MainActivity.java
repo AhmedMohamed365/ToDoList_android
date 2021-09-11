@@ -1,12 +1,18 @@
 package com.example.todo;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -31,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     static String whichActivity = "main";
     static  String tempWhich = "main";
     static boolean shwoDone = false;
+
+
+    final int channelId = 123;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         String currentdate = DateFormat.getTimeInstance(DateFormat.LONG).format(calendar.getTime());
         TextView textView = findViewById(R.id.textView2);
         textView.setText(currentdate);
+
 
 
 
@@ -99,5 +109,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+
+
     }
+
+
 }

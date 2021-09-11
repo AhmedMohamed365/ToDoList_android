@@ -4,11 +4,15 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.icu.text.DecimalFormat;
+import android.icu.text.NumberFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +36,7 @@ import static com.example.todo.MainActivity.shwoDone;
 public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOLDER> {
     private LinkedList<taskshow> tasks ;
     private boolean status = false;
-    int offset = 50;
+   // int offset = 50;
     int duration;
     public static class EXAMPLEVIEWHOLDER extends RecyclerView.ViewHolder
     {
@@ -136,7 +140,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         holder.data.setText(currentItem.getData());
         holder.deadline.setText(currentItem.getDeadline());
         status = currentItem.getStatus();
-       String deadLine =  currentItem.getDeadline().replaceAll("hours","");
+     //  String deadLine =  currentItem.getDeadline().replaceAll("hours","");
 
 
        // Still need to be edited ***!!!!!****
@@ -176,6 +180,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
 //            animationDrawable.start();
             holder.itemView.setBackgroundColor(Color.TRANSPARENT);
 
+
             crossfade(holder);
 
             holder.done.setEnabled(true);
@@ -200,23 +205,7 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         // Set the content view to 0% opacity but visible, so that it is visible
         // (but fully transparent) during the animation.
         Rect bounds  = holder.relativeLayout.getBackground().getBounds();
-       // holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left+10,bounds.top+10,bounds.right-offset,bounds.bottom+10) );
-      //  holder.relativeLayout.setVisibility(View.VISIBLE);
 
-        // Animate the content view to 100% opacity, and clear any animation
-        // listener set on the view.
-//        holder.relativeLayout.animate()
-//
-//                .setDuration(500)
-//                .setUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//                    @Override
-//                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
-//                        holder.relativeLayout.getBackground().setBounds(new Rect( bounds.left,bounds.top,bounds.right-offset,bounds.bottom) );
-//                        Log.d("update","updates");
-//                    }
-//
-//
-//                });
 
 
         ValueAnimator animation = ValueAnimator.ofInt(0, 500);
@@ -240,5 +229,8 @@ public class ViewHandler extends RecyclerView.Adapter<ViewHandler.EXAMPLEVIEWHOL
         // participate in layout passes, etc.)
 
     }
+
+
+
 }
 
