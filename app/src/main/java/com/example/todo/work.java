@@ -14,6 +14,10 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.icu.text.DecimalFormat;
 import android.icu.text.NumberFormat;
+import android.media.AudioAttributes;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -401,10 +405,30 @@ public class work extends AppCompatActivity {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(whichActivity + "Channel", name, importance);
             channel.setDescription(description);
+            channel.enableVibration(true);
+
+            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .build();
+
+            channel.setSound(alarmSound,audioAttributes);
+
+
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
             notificationManager.createNotificationChannel(channel);
+
+
+          //  Uri soundUri =
+
+
+
+
         }
     }
 
@@ -447,6 +471,8 @@ public class work extends AppCompatActivity {
 
     public void sendNotification(String title , String content )
     {
+
+        //This CODE need to be reviewd   a lot of unwanted lines for making notification sound work
         // Create an explicit intent for an Activity in your app
         Intent notificationIntent = new Intent(this, work.class);
         notificationIntent.putExtra("type", whichActivity);
@@ -463,14 +489,27 @@ public class work extends AppCompatActivity {
                         .bigText(content ))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setDefaults(NotificationCompat.DEFAULT_SOUND);
 
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        builder.setSound(alarmSound);
+       // builder.build();
+        builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)) ;
+
+        try {
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+            r.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         createNotificationChannel();
 
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-
+        //notificationManager.notify(1000, builder);
 
 // notificationId is a unique int for each notification that you must define
         notificationManager.notify(channelId+ Integer.parseInt(whichActivity.replaceAll("\\w","1")), builder.build());
