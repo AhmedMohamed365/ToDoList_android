@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.icu.text.DecimalFormat;
 import android.icu.text.NumberFormat;
 import android.os.Build;
@@ -34,6 +35,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.math.BigDecimal;
 import java.util.LinkedList;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 import static com.example.todo.MainActivity.shwoDone;
 import static com.example.todo.MainActivity.whichActivity;
@@ -55,6 +57,7 @@ public class work extends AppCompatActivity {
     TextView workLabel;
     final int channelId = 123;
 
+    int currentDrwable =R.drawable.w ;
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +72,7 @@ public class work extends AppCompatActivity {
         workLabel = findViewById(R.id.label);
 
 
-        //to make Notification works well :)
-//
-//        if(().getStringExtra("type")!= null)
-//        {
-//            whichActivity = getIntent().getStringExtra("type");
-//        }
+
         RecyclerView.LayoutManager layoutManager;
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -85,36 +83,7 @@ public class work extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-//NOTIFICATION SECTION
 
-        //  whichActivity  = "work";
-        // Create an explicit intent for an Activity in your app
-        Intent notificationIntent = new Intent(this, work.class);
-        notificationIntent.putExtra("type", whichActivity);
-        notificationIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK|FLAG_ACTIVITY_SINGLE_TOP);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-
-        pendingIntent.getActivity(this, 0, notificationIntent,   PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, whichActivity + "Channel")
-                .setSmallIcon(R.drawable.f)
-                .setContentTitle("My notification")
-                .setContentText("tasks you have to finish for +" + whichActivity)
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("tasks you have to finish for +" + whichActivity))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
-
-
-        createNotificationChannel();
-
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-
-
-// notificationId is a unique int for each notification that you must define
-        notificationManager.notify(channelId, builder.build());
 
 
         //Aniamtion section
@@ -145,18 +114,40 @@ public class work extends AppCompatActivity {
             }
         });
         workLabel.setText(whichActivity.toUpperCase());
-        if (whichActivity.equals("work"))
-            workLabel.setCompoundDrawablesWithIntrinsicBounds(R.drawable.w, 0, 0, 0);
-        else if (whichActivity.equals("family"))
-            workLabel.setCompoundDrawablesWithIntrinsicBounds(R.drawable.fam, 0, 0, 0);
-        else if (whichActivity.equals("gym"))
-            workLabel.setCompoundDrawablesWithIntrinsicBounds(R.drawable.fitness, 0, 0, 0);
-        else if (whichActivity.equals("studying"))
-            workLabel.setCompoundDrawablesWithIntrinsicBounds(R.drawable.studying, 0, 0, 0);
-        else if (whichActivity.equals("shopping"))
-            workLabel.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sh, 0, 0, 0);
-        else if (whichActivity.equals("weekend"))
-            workLabel.setCompoundDrawablesWithIntrinsicBounds(R.drawable.we, 0, 0, 0);
+
+        switch (whichActivity) {
+            case "work":
+                currentDrwable = R.drawable.w;
+                workLabel.setCompoundDrawablesWithIntrinsicBounds(currentDrwable, 0, 0, 0);
+
+                break;
+            case "family":
+                currentDrwable = R.drawable.fam;
+                workLabel.setCompoundDrawablesWithIntrinsicBounds(R.drawable.fam, 0, 0, 0);
+                break;
+            case "gym":
+                currentDrwable = R.drawable.fitness;
+                workLabel.setCompoundDrawablesWithIntrinsicBounds(currentDrwable, 0, 0, 0);
+                break;
+            case "studying":
+                currentDrwable = R.drawable.studying;
+                workLabel.setCompoundDrawablesWithIntrinsicBounds(currentDrwable, 0, 0, 0);
+                break;
+            case "shopping":
+                currentDrwable = R.drawable.sh;
+                workLabel.setCompoundDrawablesWithIntrinsicBounds(currentDrwable, 0, 0, 0);
+                break;
+            case "weekend":
+                currentDrwable = R.drawable.we;
+                workLabel.setCompoundDrawablesWithIntrinsicBounds(currentDrwable, 0, 0, 0);
+                break;
+        }
+
+
+        //NOTIFICATION SECTION
+
+
+      createNotificationChannel();
 
         loadData();
 
@@ -308,9 +299,9 @@ public class work extends AppCompatActivity {
 
 
         //variable to set Done Cards to green
-        View card;
+
         Cursor data = myDB.getListContents();
-        int i = 0;
+
         if (data.getCount() == 0) {
 
         } else {
@@ -320,10 +311,12 @@ public class work extends AppCompatActivity {
                     if (shwoDone && data.getString(6).equals("Done")) {
                         tasks.add(new taskshow(data.getString(1), data.getString(2), getLeftTime(data.getString(4)), done, edit, delete, true));
 
-                        i++;
+
                     } else if (shwoDone == false && data.getString(6).equals("going")) {
+
                         tasks.add(new taskshow(data.getString(1), data.getString(2), getLeftTime(data.getString(4)), done, edit, delete, false));
-                        i++;
+                        if(getLeftTime(data.getString(4)).contains("hours"))
+                            sendNotification("Task to finish",String.format("you have to  finish  '%s' in hours !  ",data.getString(1)));
                     }
 
 
@@ -395,6 +388,10 @@ public class work extends AppCompatActivity {
     }
 
 
+
+
+    // **This section to handle notification feature
+
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
@@ -411,12 +408,22 @@ public class work extends AppCompatActivity {
         }
     }
 
+
+
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
+        if(getIntent().getExtras() != null)
+        {
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }
+
     }
+
+
 
     @Override
     public void onNewIntent(Intent intent) {
@@ -437,8 +444,39 @@ public class work extends AppCompatActivity {
 
     }
 
+
+    public void sendNotification(String title , String content )
+    {
+        // Create an explicit intent for an Activity in your app
+        Intent notificationIntent = new Intent(this, work.class);
+        notificationIntent.putExtra("type", whichActivity);
+        notificationIntent.setFlags( FLAG_ACTIVITY_NEW_TASK|FLAG_ACTIVITY_SINGLE_TOP);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // pendingIntent.getActivity(this, 0, notificationIntent,   );
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, whichActivity + "Channel")
+                .setSmallIcon(currentDrwable)
+                .setContentTitle(title)
+                .setContentText(content )
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(content ))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+
+        createNotificationChannel();
+
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+
+// notificationId is a unique int for each notification that you must define
+        notificationManager.notify(channelId+ Integer.parseInt(whichActivity.replaceAll("\\w","1")), builder.build());
+    }
 }
 
-
+//**************************************************************************************************
 
 
